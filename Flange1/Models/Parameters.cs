@@ -34,8 +34,8 @@ namespace Models
                 // Толщина (C): от 1 до 400
                 { ParameterType.ThicknessC,          new Parameter(1, 400) },
                 
-                // Диаметр отверстий (E): от 1 до 300
-                { ParameterType.DiameterHolesE,      new Parameter(1, 300) },
+                // Диаметр отверстий (E): от 0.1 до 300
+                { ParameterType.DiameterHolesE,      new Parameter(0.1, 100) },
                 
                 // Количество отверстий (N): от 1 до 8
                 { ParameterType.HolesAmountN,        new Parameter(1, 8)  }

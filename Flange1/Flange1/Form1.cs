@@ -171,8 +171,13 @@ namespace Flange1
             // c: толщина должна быть > 1 и < a
             ok &= ValidateField(textBoxC, c, val => (val > 1 && val < a) ? null : "Толщина c должна быть меньше a");
 
-            // e: диаметр отверстий должен быть > 1 и меньше c и a
-            ok &= ValidateField(textBoxE, e_, val => (val > 1 && val < c && val < a) ? null : "Диаметр e должен быть < c и < a");
+            // Этап 3: Вычисляем maxHoleDiameter (диаметр отверстий)
+            double maxHoleDiameter = (a - b) * 0.45;
+
+            // e: диаметр отверстий должен быть > 0, меньше c, a и maxHoleDiameter
+            ok &= ValidateField(textBoxE, e_, val => (val > 0 && val < c && val < a && val <= maxHoleDiameter)
+                ? null
+                : $"Диаметр e должен быть e < c, < a и <= {maxHoleDiameter:F2}");
 
             // n: количество отверстий должно быть в диапазоне 1..8
             ok &= ValidateField(textBoxN, n, val => (val > 0 && val <= 8) ? null : "Количество отверстий n должно быть 1..8");
@@ -185,7 +190,7 @@ namespace Flange1
                 return;
             }
 
-            // Этап 3: Все проверки пройдены - сохраняем значения в объект Parameters
+            // Этап 4: Все проверки пройдены - сохраняем значения в объект Parameters
             parameters.OuterDiameter_a = a;
             parameters.ProtrusionDiameter_b = b;
             parameters.Height_d = d;
@@ -193,10 +198,11 @@ namespace Flange1
             parameters.DiameterHoles_e = e_;
             parameters.NumberOfHoles_n = n;
 
-            // Этап 4: Создание и построение 3D-модели через Builder и Wrapper
+            // Этап 5: Создание и построение 3D-модели через Builder и Wrapper
             Builder builder = new Builder(new Wrapper.Wrapper());
             builder.BuildModel(parameters);
         }
+
 
         private void textBox6_TextChanged(object sender, EventArgs e)
         {

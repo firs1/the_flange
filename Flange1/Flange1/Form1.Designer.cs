@@ -288,9 +288,9 @@ namespace Flange1
             label17.Location = new Point(6, 162);
             label17.Margin = new Padding(4, 0, 4, 0);
             label17.Name = "label17";
-            label17.Size = new Size(102, 15);
+            label17.Size = new Size(99, 15);
             label17.TabIndex = 23;
-            label17.Text = "0 <d <c и 0 <d <a";
+            label17.Text = "0 < е < (a-b)*0,45";
             // 
             // groupBox1
             // 
