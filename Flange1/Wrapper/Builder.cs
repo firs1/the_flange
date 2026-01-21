@@ -43,6 +43,7 @@ namespace Wrapper
             double d = p.Height_d;
             double holeDiameter = p.DiameterHoles_e;
             int holeCount = p.NumberOfHoles_n;
+            int holeStep = p.HoleStep_h;
 
             _wrapper.CreateBaseCylinder(part, a, c);
 
@@ -50,19 +51,24 @@ namespace Wrapper
             _wrapper.CreateCylinderOnPlane(part, topPlane, b, d);
 
             double holeRadius = (a / 2 + b / 2) / 2;
+            // Примерный угол, который занимает один вырез
+            // 1.1 нужен для границы погрешности сверху
+            double aproxAngleDiameter = 1.1 * 360 / (p.OuterDiameter_a * Math.PI / p.DiameterHoles_e);
 
-            double holeStep = _wrapper.HoleStep;
+            if(holeCount == 8)
 
-            if (holeCount == 8)
             {
-                holeStep = 360.0 / holeCount;  
+                holeStep = 360 / (int)holeCount;  
             }
 
-            if (holeCount != 8 && holeStep != 0)
+            if (holeCount != 8 && p.HoleStep != 0 && p.HoleStep < aproxAngleDiameter)
+
             {
-                holeStep = p.HoleStep_h + holeDiameter;
+                holeStep = (int)p.HoleStep_h + (int)p.DiameterHoles_e;
             }
-            if (holeStep == 0)
+
+            if (p.HoleStep == 0 || p.HoleStep > (int)aproxAngleDiameter)
+
             {
                 holeStep = p.HoleStep_h;
             }
