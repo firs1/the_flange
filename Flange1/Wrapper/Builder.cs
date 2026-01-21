@@ -67,9 +67,13 @@ namespace Wrapper
                 holeStep = p.HoleStep_h;
             }
 
-            var basePlane = part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
-            var sketch = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
-            var sketchDef = (ksSketchDefinition)sketch.GetDefinition();
+            var basePlane =
+                part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
+            var sketch =
+                (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
+            var sketchDef =
+                (ksSketchDefinition)sketch.GetDefinition();
+
             sketchDef.SetPlane(basePlane);
             sketch.Create();
             var doc2D = (ksDocument2D)sketchDef.BeginEdit();
@@ -86,7 +90,9 @@ namespace Wrapper
             }
 
             sketchDef.EndEdit();
-            var cut = (ksEntity)part.NewEntity((short)Obj3dType.o3d_cutExtrusion);
+            var cut = 
+                (ksEntity)part.NewEntity((short)Obj3dType.o3d_cutExtrusion);
+
             var cutDef = (ksCutExtrusionDefinition)cut.GetDefinition();
             cutDef.SetSketch(sketch);
             cutDef.SetSideParam(false, 1, c + 1);

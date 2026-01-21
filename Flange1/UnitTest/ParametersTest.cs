@@ -45,7 +45,8 @@ namespace UnitTest
         }
 
         /// <description>
-        /// Проверка корректного преобразования количества отверстий в целое число.
+        /// Проверка корректного преобразования 
+        /// количества отверстий в целое число.
         /// </description>
         [Test]
         public void NumberOfHoles_IsReturnedAsInt()
@@ -267,7 +268,8 @@ namespace UnitTest
 
 
         /// </description>
-        /// Тест для проверки, что шаг в пределах допустимого диапазона не вызывает исключений.
+        /// Тест для проверки, что шаг в пределах 
+        /// допустимого диапазона не вызывает исключений.
         /// </description>
         [Test]
         public void ValidateStep_StepWithinAllowedRange_ShouldPass()
@@ -283,7 +285,8 @@ namespace UnitTest
         }
 
         /// </description>
-        /// Тест для проверки, что при задании шага для 8 отверстий возникает исключение.
+        /// Тест для проверки, что при задании шага для 
+        /// 8 отверстий возникает исключение.
         /// </description>
         [Test]
         public void ValidateStep_StepNotZeroForEightHoles_ShouldThrowException()
@@ -303,7 +306,8 @@ namespace UnitTest
 
 
         /// </description>
-        /// Тест для проверки, что при превышении шага более 130 градусов выбрасывается исключение.
+        /// Тест для проверки, что при превышении шага 
+        /// более 130 градусов выбрасывается исключение.
         /// </description>
         [Test]
         public void ValidateStep_StepExceeds130Degrees_ShouldThrowException()
@@ -322,7 +326,8 @@ namespace UnitTest
         }
 
         /// </description>
-        /// Тест для проверки, что при задании шага, превышающего 90 градусов, для 4 отверстий выбрасывается исключение.
+        /// Тест для проверки, что при задании шага, превышающего 90 
+        /// градусов, для 4 отверстий выбрасывается исключение.
         /// </description>
         [Test]
         public void ValidateStep_StepGreaterThanMaxAllowed_ShouldThrowException()

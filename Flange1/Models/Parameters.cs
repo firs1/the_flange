@@ -61,8 +61,8 @@ namespace Models
         {
             if (NumberOfHoles_n == 8 && HoleStep != 0)
             {
-                throw new InvalidOperationException("Для 8 отверстий шаг не " +
-                    "может быть задан.");
+                throw new InvalidOperationException("Для 8 отверстий" +
+                    " шаг не может быть задан.");
             }
 
             if (HoleStep > 130)
@@ -186,7 +186,8 @@ namespace Models
             {
                 errors[ParameterType.HoleStep] =
                     $"Шаг отверстий должен быть в пределах от" +
-                    $" 0 до {maxStep} градусов для {NumberOfHoles_n} отверстий.";
+                    $" 0 до {maxStep} градусов для {NumberOfHoles_n} " +
+                    $"отверстий.";
             }
 
             return errors;
@@ -195,4 +196,3 @@ namespace Models
         #endregion
     }
 }
-
