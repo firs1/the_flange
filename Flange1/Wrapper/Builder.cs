@@ -51,6 +51,7 @@ namespace Wrapper
             _wrapper.CreateCylinderOnPlane(part, topPlane, b, d);
 
             double holeRadius = (a / 2 + b / 2) / 2;
+            //TODO: to const
             // Примерный угол, который занимает один вырез
             // 1.1 нужен для границы погрешности сверху
             double aproxAngleDiameter = 1.1 * 360 / 
@@ -65,13 +66,11 @@ namespace Wrapper
             // Если aproxAngleDiameter > p.HoleStep, отверстия накладываются друг на друга
             // Используется отступ чтобы не было наложения
             if (holeCount != 8 && p.HoleStep != 0 && p.HoleStep < aproxAngleDiameter)
-
             {
                 holeStep = (int)p.HoleStep_h + (int)p.DiameterHoles_e;
             }
 
             if (p.HoleStep == 0 || p.HoleStep > (int)aproxAngleDiameter)
-
             {
                 holeStep = p.HoleStep_h;
             }

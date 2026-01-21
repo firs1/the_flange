@@ -82,12 +82,14 @@ namespace Models
 
         #region Base access
 
+        //TODO: XML
         public void SetParameter(ParameterType type, double value)
         {
             _parameters[type].Value = value;
         }
 
 
+        //TODO: XML
         public double GetParameter(ParameterType type)
         {
             return _parameters[type].Value;
@@ -97,42 +99,49 @@ namespace Models
 
         #region Strongly typed properties
 
+        //TODO: XML
         public double OuterDiameter_a
         {
             get => GetParameter(ParameterType.OuterDiameter);
             set => SetParameter(ParameterType.OuterDiameter, value);
         }
 
+        //TODO: XML
         public double ProtrusionDiameter_b
         {
             get => GetParameter(ParameterType.ProtrusionDiameter);
             set => SetParameter(ParameterType.ProtrusionDiameter, value);
         }
 
+        //TODO: XML
         public double Height_d
         {
             get => GetParameter(ParameterType.Height);
             set => SetParameter(ParameterType.Height, value);
         }
 
+        //TODO: XML
         public double Thickness_c
         {
             get => GetParameter(ParameterType.Thickness);
             set => SetParameter(ParameterType.Thickness, value);
         }
 
+        //TODO: XML
         public double DiameterHoles_e
         {
             get => GetParameter(ParameterType.DiameterHoles);
             set => SetParameter(ParameterType.DiameterHoles, value);
         }
 
+        //TODO: XML
         public int NumberOfHoles_n
         {
             get => (int)GetParameter(ParameterType.HolesAmount);
             set => SetParameter(ParameterType.HolesAmount, value);
         }
 
+        //TODO: XML
         public int HoleStep_h
         {
             get => (int)GetParameter(ParameterType.HoleStep);
@@ -142,6 +151,7 @@ namespace Models
 
         #region Derived constraints
 
+        //TODO: XML
         public double MaxHoleDiameter =>
             (OuterDiameter_a - ProtrusionDiameter_b) * 0.45;
 
@@ -169,14 +179,18 @@ namespace Models
                 }
             }
 
+            //TODO: {}
+            //TODO: to const
             if (ProtrusionDiameter_b > 0.75 * OuterDiameter_a)
                 errors[ParameterType.ProtrusionDiameter] =
                     "Диаметр выступа B должен быть ≤ 0.75 * A";
 
+            //TODO: {}
             if (Thickness_c >= OuterDiameter_a)
                 errors[ParameterType.Thickness] =
                     "Толщина C должна быть меньше A";
 
+            //TODO: {}
             if (DiameterHoles_e > MaxHoleDiameter)
                 errors[ParameterType.DiameterHoles] =
                     $"Диаметр отверстий E должен быть ≤ {MaxHoleDiameter:F2}";

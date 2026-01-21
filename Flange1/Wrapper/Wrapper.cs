@@ -18,6 +18,7 @@ namespace Wrapper
         /// </summary>
         private KompasObject? _kompas;
 
+        //TODO: XML
         public double HoleStep { get; set; } = 0;
 
         /// <summary>
@@ -204,6 +205,7 @@ namespace Wrapper
 
             var cutDef = (ksCutExtrusionDefinition)cut.GetDefinition();
             cutDef.SetSketch(sketch);
+            //TODO: to const
             cutDef.SetSideParam(true, 2, diskHeight + 40);
             cut.Create();
         }

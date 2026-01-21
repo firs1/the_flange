@@ -6,6 +6,7 @@
     /// </summary>
     public class Parameter
     {
+        //TODO: XML
         private double _min;   // Минимально допустимое значение
         private double _max;   // Максимально допустимое значение
         private double _value;          // Текущее значение
@@ -19,6 +20,7 @@
         /// <param name="value">Начальное значение</param>
         public Parameter(double min, double max, double value = 0)
         {
+            //TODO: validation
             _min = min;
             _max = max;
             _value = value;
@@ -30,6 +32,7 @@
         public double Value
         {
             get => _value;
+            //TODO: validation
             set => _value = value;
         }
 

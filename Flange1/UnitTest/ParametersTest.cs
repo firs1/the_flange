@@ -20,7 +20,7 @@ namespace UnitTest
         /// <description>
         /// Проверка установки допустимого значения внешнего диаметра.
         /// </description>
-        [Test]
+        [TestCase, Description( "123")]
         public void OuterDiameterA_SetValidValue_ValueIsStored()
         {
             var parameters = new Parameters();

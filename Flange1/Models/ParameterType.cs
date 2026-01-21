@@ -5,6 +5,7 @@
     /// </summary>
     public enum ParameterType
     {
+        //TODO: XML
         Height,
         DiameterHoles,
         HolesAmount,

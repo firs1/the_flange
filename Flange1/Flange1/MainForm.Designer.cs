@@ -396,7 +396,6 @@ namespace Flange1
             MinimumSize = new Size(607, 423);
             Name = "MainForm";
             Text = "Плагин создания закрытых фланцев";
-            Load += MainForm_Load;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);

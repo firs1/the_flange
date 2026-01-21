@@ -204,7 +204,7 @@ namespace Flange1
 
         #region Пустые обработчики
 
-        private void MainForm_Load(object sender, EventArgs e) { }
+        //TODO: remove
         private void label3_Click(object sender, EventArgs e) { }
         private void label5_Click(object sender, EventArgs e) { }
         private void label6_Click(object sender, EventArgs e) { }

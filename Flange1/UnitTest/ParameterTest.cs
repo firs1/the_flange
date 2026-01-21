@@ -3,6 +3,7 @@ using System;
 using Models;
 namespace UnitTest
 {
+    //TODO: coding
     /// </description>
     /// Набор юнит-тестов для класса Parameter.
     /// Проверяет корректность хранения значений
@@ -19,6 +20,7 @@ namespace UnitTest
         [Test]
         public void Value_SetInsideRange_ValueIsStored()
         {
+            //TODO: rename
             var p = new Parameter(1, 10);
 
             p.Value = 5;
@@ -33,6 +35,7 @@ namespace UnitTest
         [Test]
         public void Constructor_MinAndMax_AreStoredCorrectly()
         {
+            //TODO: rename
             var p = new Parameter(2, 20);
 
             Assert.AreEqual(2, p.Min);
