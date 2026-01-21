@@ -70,18 +70,17 @@ namespace Flange1
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(11, 36);
+            label1.Location = new Point(13, 48);
             label1.Name = "label1";
-            label1.Size = new Size(177, 15);
+            label1.Size = new Size(226, 20);
             label1.TabIndex = 0;
             label1.Text = "Введите наружный диаметр(a):";
             // 
             // OuterDiameter
             // 
-            OuterDiameter.Location = new Point(194, 28);
-            OuterDiameter.Margin = new Padding(3, 2, 3, 2);
+            OuterDiameter.Location = new Point(222, 37);
             OuterDiameter.Name = "OuterDiameter";
-            OuterDiameter.Size = new Size(84, 23);
+            OuterDiameter.Size = new Size(95, 27);
             OuterDiameter.TabIndex = 1;
             OuterDiameter.Text = "200";
             OuterDiameter.TextChanged += textBox1_TextChanged;
@@ -89,18 +88,18 @@ namespace Flange1
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(283, 36);
+            label2.Location = new Point(323, 48);
             label2.Name = "label2";
-            label2.Size = new Size(28, 15);
+            label2.Size = new Size(34, 20);
             label2.TabIndex = 2;
             label2.Text = "мм.";
             // 
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(67, 61);
+            label3.Location = new Point(77, 81);
             label3.Name = "label3";
-            label3.Size = new Size(121, 15);
+            label3.Size = new Size(152, 20);
             label3.TabIndex = 3;
             label3.Text = "Диаметр выступа(b):";
             label3.Click += label3_Click;
@@ -108,10 +107,9 @@ namespace Flange1
             // ProtrusionDiameter
             // 
             ProtrusionDiameter.BackColor = Color.White;
-            ProtrusionDiameter.Location = new Point(194, 53);
-            ProtrusionDiameter.Margin = new Padding(3, 2, 3, 2);
+            ProtrusionDiameter.Location = new Point(222, 71);
             ProtrusionDiameter.Name = "ProtrusionDiameter";
-            ProtrusionDiameter.Size = new Size(84, 23);
+            ProtrusionDiameter.Size = new Size(95, 27);
             ProtrusionDiameter.TabIndex = 4;
             ProtrusionDiameter.Text = "150";
             ProtrusionDiameter.TextChanged += textBoxB_TextChanged;
@@ -119,18 +117,18 @@ namespace Flange1
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(283, 61);
+            label4.Location = new Point(323, 81);
             label4.Name = "label4";
-            label4.Size = new Size(28, 15);
+            label4.Size = new Size(34, 20);
             label4.TabIndex = 5;
             label4.Text = "мм.";
             // 
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(123, 83);
+            label5.Location = new Point(141, 111);
             label5.Name = "label5";
-            label5.Size = new Size(65, 15);
+            label5.Size = new Size(81, 20);
             label5.TabIndex = 6;
             label5.Text = "Высота(d):";
             label5.Click += label5_Click;
@@ -138,9 +136,9 @@ namespace Flange1
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(283, 86);
+            label6.Location = new Point(323, 115);
             label6.Name = "label6";
-            label6.Size = new Size(28, 15);
+            label6.Size = new Size(34, 20);
             label6.TabIndex = 8;
             label6.Text = "мм.";
             label6.Click += label6_Click;
@@ -148,18 +146,17 @@ namespace Flange1
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(39, 108);
+            label7.Location = new Point(45, 144);
             label7.Name = "label7";
-            label7.Size = new Size(149, 15);
+            label7.Size = new Size(186, 20);
             label7.TabIndex = 9;
             label7.Text = "Количество отверстий(n):";
             // 
             // HolesAmount
             // 
-            HolesAmount.Location = new Point(194, 104);
-            HolesAmount.Margin = new Padding(3, 2, 3, 2);
+            HolesAmount.Location = new Point(222, 139);
             HolesAmount.Name = "HolesAmount";
-            HolesAmount.Size = new Size(84, 23);
+            HolesAmount.Size = new Size(95, 27);
             HolesAmount.TabIndex = 10;
             HolesAmount.Text = "4";
             HolesAmount.TextChanged += HolesAmount_TextChanged;
@@ -167,18 +164,17 @@ namespace Flange1
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(112, 134);
+            label8.Location = new Point(128, 179);
             label8.Name = "label8";
-            label8.Size = new Size(76, 15);
+            label8.Size = new Size(92, 20);
             label8.TabIndex = 11;
             label8.Text = "Толщина(c):";
             // 
             // Thickness
             // 
-            Thickness.Location = new Point(194, 131);
-            Thickness.Margin = new Padding(3, 2, 3, 2);
+            Thickness.Location = new Point(222, 175);
             Thickness.Name = "Thickness";
-            Thickness.Size = new Size(84, 23);
+            Thickness.Size = new Size(95, 27);
             Thickness.TabIndex = 12;
             Thickness.Text = "50";
             Thickness.TextChanged += textBox_TextChanged;
@@ -186,18 +182,17 @@ namespace Flange1
             // label9
             // 
             label9.AutoSize = true;
-            label9.Location = new Point(283, 134);
+            label9.Location = new Point(323, 179);
             label9.Name = "label9";
-            label9.Size = new Size(28, 15);
+            label9.Size = new Size(34, 20);
             label9.TabIndex = 13;
             label9.Text = "мм.";
             // 
             // DiameterHoles
             // 
-            DiameterHoles.Location = new Point(194, 158);
-            DiameterHoles.Margin = new Padding(3, 2, 3, 2);
+            DiameterHoles.Location = new Point(222, 211);
             DiameterHoles.Name = "DiameterHoles";
-            DiameterHoles.Size = new Size(84, 23);
+            DiameterHoles.Size = new Size(95, 27);
             DiameterHoles.TabIndex = 14;
             DiameterHoles.Text = "15";
             DiameterHoles.TextChanged += textBox6_TextChanged;
@@ -205,27 +200,26 @@ namespace Flange1
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(57, 161);
+            label10.Location = new Point(65, 215);
             label10.Name = "label10";
-            label10.Size = new Size(131, 15);
+            label10.Size = new Size(166, 20);
             label10.TabIndex = 15;
             label10.Text = "Диаметр отверстий(e):";
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(284, 170);
+            label11.Location = new Point(325, 227);
             label11.Name = "label11";
-            label11.Size = new Size(28, 15);
+            label11.Size = new Size(34, 20);
             label11.TabIndex = 16;
             label11.Text = "мм.";
             // 
             // Build
             // 
-            Build.Location = new Point(167, 253);
-            Build.Margin = new Padding(3, 2, 3, 2);
+            Build.Location = new Point(203, 323);
             Build.Name = "Build";
-            Build.Size = new Size(154, 31);
+            Build.Size = new Size(176, 41);
             Build.TabIndex = 17;
             Build.Text = "Собрать";
             Build.UseVisualStyleBackColor = true;
@@ -234,10 +228,10 @@ namespace Flange1
             // label12
             // 
             label12.AutoSize = true;
-            label12.Location = new Point(7, 41);
-            label12.Margin = new Padding(4, 0, 4, 0);
+            label12.Location = new Point(8, 55);
+            label12.Margin = new Padding(5, 0, 5, 0);
             label12.Name = "label12";
-            label12.Size = new Size(67, 15);
+            label12.Size = new Size(87, 20);
             label12.TabIndex = 18;
             label12.Text = "От 2 до 400";
             label12.Click += label12_Click;
@@ -245,40 +239,40 @@ namespace Flange1
             // label13
             // 
             label13.AutoSize = true;
-            label13.Location = new Point(6, 113);
-            label13.Margin = new Padding(4, 0, 4, 0);
+            label13.Location = new Point(7, 151);
+            label13.Margin = new Padding(5, 0, 5, 0);
             label13.Name = "label13";
-            label13.Size = new Size(55, 15);
+            label13.Size = new Size(71, 20);
             label13.TabIndex = 19;
             label13.Text = "От 1 до 8";
             // 
             // label14
             // 
             label14.AutoSize = true;
-            label14.Location = new Point(7, 63);
-            label14.Margin = new Padding(4, 0, 4, 0);
+            label14.Location = new Point(8, 84);
+            label14.Margin = new Padding(5, 0, 5, 0);
             label14.Name = "label14";
-            label14.Size = new Size(74, 15);
+            label14.Size = new Size(95, 20);
             label14.TabIndex = 20;
             label14.Text = "b <= 0.75 * a";
             // 
             // label15
             // 
             label15.AutoSize = true;
-            label15.Location = new Point(6, 86);
-            label15.Margin = new Padding(4, 0, 4, 0);
+            label15.Location = new Point(7, 115);
+            label15.Margin = new Padding(5, 0, 5, 0);
             label15.Name = "label15";
-            label15.Size = new Size(67, 15);
+            label15.Size = new Size(87, 20);
             label15.TabIndex = 21;
             label15.Text = "От 2 до 300";
             // 
             // label16
             // 
             label16.AutoSize = true;
-            label16.Location = new Point(7, 139);
-            label16.Margin = new Padding(4, 0, 4, 0);
+            label16.Location = new Point(8, 185);
+            label16.Margin = new Padding(5, 0, 5, 0);
             label16.Name = "label16";
-            label16.Size = new Size(33, 15);
+            label16.Size = new Size(42, 20);
             label16.TabIndex = 22;
             label16.Text = "c < а";
             label16.Click += label16_Click;
@@ -286,10 +280,10 @@ namespace Flange1
             // label17
             // 
             label17.AutoSize = true;
-            label17.Location = new Point(7, 166);
-            label17.Margin = new Padding(4, 0, 4, 0);
+            label17.Location = new Point(8, 221);
+            label17.Margin = new Padding(5, 0, 5, 0);
             label17.Name = "label17";
-            label17.Size = new Size(99, 15);
+            label17.Size = new Size(127, 20);
             label17.TabIndex = 23;
             label17.Text = "0 < е < (a-b)*0,45";
             label17.Click += label17_Click;
@@ -316,9 +310,11 @@ namespace Flange1
             groupBox1.Controls.Add(label9);
             groupBox1.Controls.Add(label8);
             groupBox1.Controls.Add(Thickness);
-            groupBox1.Location = new Point(10, 11);
+            groupBox1.Location = new Point(11, 15);
+            groupBox1.Margin = new Padding(3, 4, 3, 4);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(322, 226);
+            groupBox1.Padding = new Padding(3, 4, 3, 4);
+            groupBox1.Size = new Size(368, 301);
             groupBox1.TabIndex = 24;
             groupBox1.TabStop = false;
             groupBox1.Text = "Ввод Размеров";
@@ -327,34 +323,36 @@ namespace Flange1
             // label20
             // 
             label20.AutoSize = true;
-            label20.Location = new Point(281, 195);
+            label20.Location = new Point(321, 260);
             label20.Name = "label20";
-            label20.Size = new Size(34, 15);
+            label20.Size = new Size(43, 20);
             label20.TabIndex = 20;
             label20.Text = "град.";
             // 
             // Step
             // 
-            Step.Location = new Point(194, 186);
+            Step.Location = new Point(222, 248);
+            Step.Margin = new Padding(3, 4, 3, 4);
             Step.Name = "Step";
-            Step.Size = new Size(84, 23);
+            Step.Size = new Size(95, 27);
             Step.TabIndex = 19;
             Step.Text = "90";
             // 
             // label18
             // 
             label18.AutoSize = true;
-            label18.Location = new Point(97, 190);
+            label18.Location = new Point(111, 253);
             label18.Name = "label18";
-            label18.Size = new Size(91, 15);
+            label18.Size = new Size(115, 20);
             label18.TabIndex = 18;
             label18.Text = "Шаг отверстий:";
             // 
             // Height
             // 
-            Height.Location = new Point(194, 78);
+            Height.Location = new Point(222, 104);
+            Height.Margin = new Padding(3, 4, 3, 4);
             Height.Name = "Height";
-            Height.Size = new Size(84, 23);
+            Height.Size = new Size(95, 27);
             Height.TabIndex = 17;
             Height.Text = "50";
             // 
@@ -367,9 +365,11 @@ namespace Flange1
             groupBox2.Controls.Add(label15);
             groupBox2.Controls.Add(label16);
             groupBox2.Controls.Add(label13);
-            groupBox2.Location = new Point(338, 11);
+            groupBox2.Location = new Point(386, 15);
+            groupBox2.Margin = new Padding(3, 4, 3, 4);
             groupBox2.Name = "groupBox2";
-            groupBox2.Size = new Size(151, 226);
+            groupBox2.Padding = new Padding(3, 4, 3, 4);
+            groupBox2.Size = new Size(173, 301);
             groupBox2.TabIndex = 25;
             groupBox2.TabStop = false;
             groupBox2.Text = "Допустимые размеры";
@@ -378,21 +378,22 @@ namespace Flange1
             // label19
             // 
             label19.AutoSize = true;
-            label19.Location = new Point(7, 195);
+            label19.Location = new Point(8, 260);
             label19.Name = "label19";
-            label19.Size = new Size(71, 15);
+            label19.Size = new Size(91, 20);
             label19.TabIndex = 24;
             label19.Text = "0 <= 360 / n";
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(515, 295);
+            ClientSize = new Size(589, 376);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(Build);
-            Margin = new Padding(3, 2, 3, 2);
+            MaximumSize = new Size(607, 423);
+            MinimumSize = new Size(607, 423);
             Name = "MainForm";
             Text = "Плагин создания закрытых фланцев";
             Load += MainForm_Load;
