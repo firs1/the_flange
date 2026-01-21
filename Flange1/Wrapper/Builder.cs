@@ -53,7 +53,8 @@ namespace Wrapper
             double holeRadius = (a / 2 + b / 2) / 2;
             // Примерный угол, который занимает один вырез
             // 1.1 нужен для границы погрешности сверху
-            double aproxAngleDiameter = 1.1 * 360 / (p.OuterDiameter_a * Math.PI / p.DiameterHoles_e);
+            double aproxAngleDiameter = 1.1 * 360 / 
+                (p.OuterDiameter_a * Math.PI / p.DiameterHoles_e);
 
             if(holeCount == 8)
 
@@ -61,6 +62,8 @@ namespace Wrapper
                 holeStep = 360 / (int)holeCount;  
             }
 
+            // Если aproxAngleDiameter > p.HoleStep, отверстия накладываются друг на друга
+            // Используется отступ чтобы не было наложения
             if (holeCount != 8 && p.HoleStep != 0 && p.HoleStep < aproxAngleDiameter)
 
             {
