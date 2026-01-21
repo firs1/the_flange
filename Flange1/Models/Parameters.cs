@@ -1,123 +1,198 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Models
 {
     /// <summary>
-    /// Класс для управления параметрами фланца. Хранит параметры в словаре и предоставляет
-    /// типизированные свойства для доступа к ним с автоматической валидацией через класс Parameter.
+    /// Хранение и бизнес-валидация параметров фланца
+    /// Включает логику для работы с параметрами фланца, 
+    /// их валидации и обработки ограничений.
     /// </summary>
     public class Parameters
     {
-        private Dictionary<ParameterType, Parameter> _parameters;
-
         /// <summary>
-        /// Инициализирует новый экземпляр класса Parameters со значениями по умолчанию.
-        /// Создает словарь параметров с заданными диапазонами допустимых значений.
+        /// Коллекция параметров фланца, сгруппированных по типу.
+        /// Используется для централизованного хранения значений
+        /// и выполнения проверок корректности.
+        /// </summary>
+        private readonly Dictionary<ParameterType, Parameter> _parameters;
+
+        /// </summary>
+        /// Конструктор класса Parameters, который инициализирует 
+        /// словарь с параметрами фланца
         /// </summary>
         public Parameters()
         {
-            _parameters = new Dictionary<ParameterType, Parameter>()
+            _parameters = new Dictionary<ParameterType, Parameter>
             {
-                // Внешний диаметр (A): от 1 до 400
-                { ParameterType.OuterDiameterA,      new Parameter(1, 400) },
-                
-                // Диаметр выступа (B): от 1 до 300
-                { ParameterType.ProtrusionDiameterB, new Parameter(1, 300) },
-                
-                // Высота (D): от 1 до 300
-                { ParameterType.HeightD,             new Parameter(1, 300) },
-                
-                // Толщина (C): от 1 до 400
-                { ParameterType.ThicknessC,          new Parameter(1, 400) },
-                
-                // Диаметр отверстий (E): от 1 до 300
-                { ParameterType.DiameterHolesE,      new Parameter(1, 300) },
-                
-                // Количество отверстий (N): от 1 до 8
-                { ParameterType.HolesAmountN,        new Parameter(1, 8)  }
+                { ParameterType.OuterDiameter,      new Parameter(2, 400) },
+                { ParameterType.ProtrusionDiameter, new Parameter(1, 300) },
+                { ParameterType.Height,             new Parameter(2, 300) },
+                { ParameterType.Thickness,          new Parameter(1, 400) },
+                { ParameterType.DiameterHoles,      new Parameter(0.1, 300) },
+                { ParameterType.HolesAmount,        new Parameter(1, 8) },
+                { ParameterType.HoleStep,           new Parameter(0, 130) }
             };
         }
 
-        /// <summary>
-        /// Устанавливает значение параметра указанного типа.
         /// </summary>
-        /// <param name="type">Тип параметра для установки.</param>
-        /// <param name="value">Значение параметра.</param>
-        /// <exception cref="ArgumentException">
-        /// Выбрасывается, если значение выходит за пределы допустимого диапазона для данного параметра.
-        /// </exception>
+        /// Свойство для работы с шагом отверстий
+        /// </summary>
+        public double HoleStep
+        {
+            get => GetParameter(ParameterType.HoleStep);
+            set
+            {
+  
+                if (value == 0)
+                {
+                    value = 360.0 / NumberOfHoles_n;
+                }
+
+                SetParameter(ParameterType.HoleStep, value);
+            }
+        }
+
+        /// </summary>
+        /// Метод для проверки шагов отверстий в 
+        /// зависимости от количества отверстий
+        /// </summary>
+        public void ValidateStep()
+        {
+            if (NumberOfHoles_n == 8 && HoleStep != 0)
+            {
+                throw new InvalidOperationException("Для 8 отверстий шаг не " +
+                    "может быть задан.");
+            }
+
+            if (HoleStep > 130)
+            {
+                throw new ArgumentOutOfRangeException(nameof(HoleStep), 
+                    "Шаг не может превышать 130 градусов.");
+            }
+
+            double maxStep = 360.0 / NumberOfHoles_n;
+            if (HoleStep > maxStep)
+            {
+                throw new ArgumentOutOfRangeException(nameof(HoleStep),
+                    $"Шаг не может быть больше {maxStep} для заданного " +
+                    $"количества отверстий.");
+            }
+        }
+
+        #region Base access
+
         public void SetParameter(ParameterType type, double value)
         {
             _parameters[type].Value = value;
         }
 
-        /// <summary>
-        /// Получает значение параметра указанного типа.
-        /// </summary>
-        /// <param name="type">Тип параметра для получения.</param>
-        /// <returns>Текущее значение параметра.</returns>
+
         public double GetParameter(ParameterType type)
         {
             return _parameters[type].Value;
         }
 
-        /// <summary>
-        /// Внешний диаметр фланца (параметр A).
-        /// </summary>
+        #endregion
+
+        #region Strongly typed properties
+
         public double OuterDiameter_a
         {
-            get => GetParameter(ParameterType.OuterDiameterA);
-            set => SetParameter(ParameterType.OuterDiameterA, value);
+            get => GetParameter(ParameterType.OuterDiameter);
+            set => SetParameter(ParameterType.OuterDiameter, value);
         }
 
-        /// <summary>
-        /// Диаметр центрального выступа (параметр B).
-        /// </summary>
         public double ProtrusionDiameter_b
         {
-            get => GetParameter(ParameterType.ProtrusionDiameterB);
-            set => SetParameter(ParameterType.ProtrusionDiameterB, value);
+            get => GetParameter(ParameterType.ProtrusionDiameter);
+            set => SetParameter(ParameterType.ProtrusionDiameter, value);
         }
 
-        /// <summary>
-        /// Высота фланца (параметр D).
-        /// </summary>
         public double Height_d
         {
-            get => GetParameter(ParameterType.HeightD);
-            set => SetParameter(ParameterType.HeightD, value);
+            get => GetParameter(ParameterType.Height);
+            set => SetParameter(ParameterType.Height, value);
         }
 
-        /// <summary>
-        /// Толщина фланца (параметр C).
-        /// </summary>
         public double Thickness_c
         {
-            get => GetParameter(ParameterType.ThicknessC);
-            set => SetParameter(ParameterType.ThicknessC, value);
+            get => GetParameter(ParameterType.Thickness);
+            set => SetParameter(ParameterType.Thickness, value);
         }
 
-        /// <summary>
-        /// Диаметр крепежных отверстий (параметр E).
-        /// </summary>
         public double DiameterHoles_e
         {
-            get => GetParameter(ParameterType.DiameterHolesE);
-            set => SetParameter(ParameterType.DiameterHolesE, value);
+            get => GetParameter(ParameterType.DiameterHoles);
+            set => SetParameter(ParameterType.DiameterHoles, value);
         }
 
-        /// <summary>
-        /// Количество крепежных отверстий (параметр N).
-        /// Преобразует double в int при получении значения.
-        /// </summary>
         public int NumberOfHoles_n
         {
-            get => (int)GetParameter(ParameterType.HolesAmountN);
-            set => SetParameter(ParameterType.HolesAmountN, value);
+            get => (int)GetParameter(ParameterType.HolesAmount);
+            set => SetParameter(ParameterType.HolesAmount, value);
         }
+
+        public int HoleStep_h
+        {
+            get => (int)GetParameter(ParameterType.HoleStep);
+            set => SetParameter(ParameterType.HoleStep, value);
+        }
+        #endregion
+
+        #region Derived constraints
+
+        public double MaxHoleDiameter =>
+            (OuterDiameter_a - ProtrusionDiameter_b) * 0.45;
+
+        #endregion
+
+        #region Validation
+
+        /// <summary>
+        /// Проверка взаимных ограничений параметров
+        /// </summary>
+        public Dictionary<ParameterType, string> Validate()
+        {
+            var errors = new Dictionary<ParameterType, string>();
+
+            foreach (var pair in _parameters)
+            {
+                var type = pair.Key;
+                var param = pair.Value;
+
+                if (param.Value < param.Min || param.Value > param.Max)
+                {
+                    errors[type] =
+                        $"Значение должно быть в диапазоне [{param.Min}; " +
+                        $"{param.Max}]";
+                }
+            }
+
+            if (ProtrusionDiameter_b > 0.75 * OuterDiameter_a)
+                errors[ParameterType.ProtrusionDiameter] =
+                    "Диаметр выступа B должен быть ≤ 0.75 * A";
+
+            if (Thickness_c >= OuterDiameter_a)
+                errors[ParameterType.Thickness] =
+                    "Толщина C должна быть меньше A";
+
+            if (DiameterHoles_e > MaxHoleDiameter)
+                errors[ParameterType.DiameterHoles] =
+                    $"Диаметр отверстий E должен быть ≤ {MaxHoleDiameter:F2}";
+
+            double maxStep = 360.0 / NumberOfHoles_n;
+            if (HoleStep_h <= 0 || HoleStep_h > maxStep)
+            {
+                errors[ParameterType.HoleStep] =
+                    $"Шаг отверстий должен быть в пределах от" +
+                    $" 0 до {maxStep} градусов для {NumberOfHoles_n} отверстий.";
+            }
+
+            return errors;
+        }
+
+        #endregion
     }
 }
+

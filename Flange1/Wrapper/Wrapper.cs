@@ -10,21 +10,35 @@ namespace Wrapper
     /// </summary>
     public class Wrapper
     {
+        /// <summary>
+        /// Экземпляр приложения КОМПАС-3D.
+        /// Может быть <c>null</c>, если приложение не запущено
+        /// или подключение не было выполнено.
+        /// </summary>
         private KompasObject? _kompas;
+
+        public double HoleStep { get; set; } = 0;
 
         /// <summary>
         /// Подключается к запущенному экземпляру КОМПАС-3D или запускает новый.
         /// </summary>
-        /// <exception cref="Exception">Выбрасывается при невозможности подключения или запуска КОМПАС.</exception>
+        /// <exception cref="Exception">Выбрасывается при 
+        /// невозможности подключения или запуска КОМПАС.</exception>
         public void AttachOrRunCAD()
         {
             var type = Type.GetTypeFromProgID("KOMPAS.Application.5");
+
             if (type == null)
-                throw new Exception("Не удалось получить ProgID KOMPAS.");
+            {
+                throw new Exception("Не удалось получить ProgID KOMPАС.");
+            }
 
             _kompas = Activator.CreateInstance(type) as KompasObject;
+
             if (_kompas == null)
+            {
                 throw new Exception("Компас не удалось запустить.");
+            }
 
             _kompas.Visible = true;
         }
@@ -51,30 +65,38 @@ namespace Wrapper
         }
 
         /// <summary>
-        /// Создает базовый цилиндр (диск фланца).
+        /// Создаёт базовый цилиндр путём выдавливания эскиза окружности.
         /// </summary>
-        /// <param name="part">Деталь, в которой создается цилиндр.</param>
+        /// <param name="part">Деталь КОМПАС-3D, в которой создаётся цилиндр.</param>
         /// <param name="diameter">Диаметр цилиндра.</param>
         /// <param name="height">Высота цилиндра.</param>
+        /// <remarks>
+        /// Метод создаёт эскиз окружности в плоскости XOY
+        /// и выполняет базовое выдавливание на заданную высоту.
+        /// </remarks>
         public void CreateBaseCylinder(ksPart part, double diameter, double height)
         {
             var entity = (ksEntity)part.NewEntity((short)Obj3dType.o3d_baseExtrusion);
             var def = (ksBaseExtrusionDefinition)entity.GetDefinition();
 
+            // Задаём параметры выдавливания
             def.SetSideParam(true, 0, height);
 
+            // Создаём эскиз в плоскости XOY
             var sketch = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
             var sketchDef = (ksSketchDefinition)sketch.GetDefinition();
             sketchDef.SetPlane(part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY));
             sketch.Create();
 
-            var doc2d = (ksDocument2D)sketchDef.BeginEdit() as ksDocument2D;
+            // Рисуем окружность с радиусом diameter / 2
+            var doc2d = (ksDocument2D)sketchDef.BeginEdit();
             doc2d.ksCircle(0, 0, diameter / 2, 1);
             sketchDef.EndEdit();
 
             def.SetSketch(sketch);
             entity.Create();
         }
+
 
         /// <summary>
         /// Создает плоскость смещения от базовой плоскости.
@@ -132,8 +154,10 @@ namespace Wrapper
         /// <param name="part">Деталь, в которой создается отверстие.</param>
         /// <param name="diameter">Диаметр отверстия.</param>
         /// <param name="diskHeight">Толщина диска.</param>
-        /// <param name="holeRadius">Радиус окружности, на которой расположено отверстие.</param>
-        /// <param name="angle">Угол расположения отверстия на окружности (в радианах).</param>
+        /// <param name="holeRadius">Радиус окружности, на 
+        /// которой расположено отверстие.</param>
+        /// <param name="angle">Угол расположения отверстия на 
+        /// окружности (в радианах).</param>
         public void CutThroughDiskHole(
             ksPart part,
             double diameter,
@@ -144,11 +168,9 @@ namespace Wrapper
             double x = holeRadius * Math.Cos(angle);
             double y = holeRadius * Math.Sin(angle);
 
-            // Плоскость эскиза — базовая плоскость XOY (нижняя грань диска)
             var plane = (ksEntity)part.NewEntity((short)Obj3dType.o3d_planeXOY);
             plane.Create();
 
-            // Эскиз отверстия
             var sketch = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
             var sketchDef = (ksSketchDefinition)sketch.GetDefinition();
             sketchDef.SetPlane(plane);
@@ -158,7 +180,6 @@ namespace Wrapper
             doc2D.ksCircle(x, y, diameter / 2, 1);
             sketchDef.EndEdit();
 
-            // Вырез вверх через диск
             var cut = (ksEntity)part.NewEntity((short)Obj3dType.o3d_cutExtrusion);
             var cutDef = (ksCutExtrusionDefinition)cut.GetDefinition();
             cutDef.SetSketch(sketch);

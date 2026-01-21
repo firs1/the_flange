@@ -11,6 +11,10 @@ namespace Wrapper
     /// </summary>
     public class Builder
     {
+        /// <summary>
+        /// Обёртка над API КОМПАС-3D,
+        /// используемая для создания геометрических объектов.
+        /// </summary>
         private readonly Wrapper _wrapper;
 
         /// <summary>
@@ -28,14 +32,11 @@ namespace Wrapper
         /// <param name="p">Параметры фланца для построения модели.</param>
         public void BuildModel(Parameters p)
         {
-            // Запуск или подключение к КОМПАС-3D
             _wrapper.AttachOrRunCAD();
 
-            // Создание нового 3D-документа
             var doc = _wrapper.CreateDocument3D();
             var part = _wrapper.GetPart(doc);
 
-            // Извлечение параметров модели
             double a = p.OuterDiameter_a;
             double b = p.ProtrusionDiameter_b;
             double c = p.Thickness_c;
@@ -43,38 +44,48 @@ namespace Wrapper
             double holeDiameter = p.DiameterHoles_e;
             int holeCount = p.NumberOfHoles_n;
 
-            // Создание основного диска
             _wrapper.CreateBaseCylinder(part, a, c);
 
-            // Создание центрального выступа
             var topPlane = _wrapper.CreateOffsetPlane(part, c);
             _wrapper.CreateCylinderOnPlane(part, topPlane, b, d);
 
-            // Создание отверстий для крепления
             double holeRadius = (a / 2 + b / 2) / 2;
 
-            // Создание эскиза для отверстий
+            double holeStep = _wrapper.HoleStep;
+
+            if (holeCount == 8)
+            {
+                holeStep = 360.0 / holeCount;  
+            }
+
+            if (holeCount != 8 && holeStep != 0)
+            {
+                holeStep = p.HoleStep_h + holeDiameter;
+            }
+            if (holeStep == 0)
+            {
+                holeStep = p.HoleStep_h;
+            }
+
             var basePlane = part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
             var sketch = (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
             var sketchDef = (ksSketchDefinition)sketch.GetDefinition();
             sketchDef.SetPlane(basePlane);
             sketch.Create();
-
             var doc2D = (ksDocument2D)sketchDef.BeginEdit();
 
-            // Рисование отверстий в эскизе
             for (int i = 0; i < holeCount; i++)
             {
-                double angle = 2 * Math.PI * i / holeCount;
-                double x = holeRadius * Math.Cos(angle);
-                double y = holeRadius * Math.Sin(angle);
+                double angle = holeStep * i; 
+                double angleInRadians = angle * Math.PI / 180;
+
+                double x = holeRadius * Math.Cos(angleInRadians);
+                double y = holeRadius * Math.Sin(angleInRadians);
 
                 doc2D.ksCircle(x, y, holeDiameter / 2, 1);
             }
 
             sketchDef.EndEdit();
-
-            // Вырез отверстий в модели
             var cut = (ksEntity)part.NewEntity((short)Obj3dType.o3d_cutExtrusion);
             var cutDef = (ksCutExtrusionDefinition)cut.GetDefinition();
             cutDef.SetSketch(sketch);

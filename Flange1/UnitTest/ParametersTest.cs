@@ -8,293 +8,170 @@ using NUnit.Framework;
 
 namespace UnitTest
 {
-    /// <summary>
+    /// <description>
     /// Юнит-тесты для класса Parameters.
     /// Проверяют корректную работу свойств
     /// и соблюдение ограничений параметров.
-    /// </summary>
+    /// </description>
     [TestFixture]
     public class ParametersTests
     {
-        /// <summary>
+        //TODO: description
+        /// <description>
         /// Проверка установки допустимого значения внешнего диаметра.
-        /// </summary>
+        /// </description>
         [Test]
         public void OuterDiameterA_SetValidValue_ValueIsStored()
         {
-            // Arrange
             var parameters = new Parameters();
 
-            // Act
             parameters.OuterDiameter_a = 200;
 
-            // Assert
             Assert.AreEqual(200, parameters.OuterDiameter_a);
         }
 
-        /// <summary>
-        /// Проверка выброса исключения при установке толщины меньше минимального значения.
-        /// </summary>
-        [Test]
-        public void ThicknessC_SetValueBelowMin_ThrowsException()
-        {
-            // Arrange
-            var parameters = new Parameters();
 
-            // Act & Assert
-            TestDelegate code = () => parameters.Thickness_c = 0;
-            Assert.Throws<ArgumentException>(code);
-        }
-
-        /// <summary>
+        /// <description>
         /// Проверка установки граничного максимального значения высоты.
-        /// </summary>
+        /// </description>
         [Test]
         public void HeightD_SetMaxBoundaryValue_ValueIsStored()
         {
-            // Arrange
             var parameters = new Parameters();
 
-            // Act
             parameters.Height_d = 300;
 
-            // Assert
             Assert.AreEqual(300, parameters.Height_d);
         }
 
-        /// <summary>
+        /// <description>
         /// Проверка корректного преобразования количества отверстий в целое число.
-        /// </summary>
+        /// </description>
         [Test]
         public void NumberOfHoles_IsReturnedAsInt()
         {
-            // Arrange
             var parameters = new Parameters();
 
-            // Act
             parameters.NumberOfHoles_n = 6;
 
-            // Assert
             Assert.AreEqual(6, parameters.NumberOfHoles_n);
         }
 
-        /// <summary>
-        /// Проверка выброса исключения при превышении допустимого диаметра отверстий.
-        /// </summary>
-        [Test]
-        public void DiameterHolesE_GreaterThanMax_ThrowsException()
-        {
-            // Arrange
-            var parameters = new Parameters();
 
-            // Act & Assert
-            _ = Assert.Throws<ArgumentException>(() =>
-            {
-                parameters.DiameterHoles_e = 500;
-            });
-        }
-
-        /// <summary>
+        /// <description>
         /// Проверка установки допустимого значения диаметра выступу B.
-        /// </summary>
+        /// </description>
         [Test]
         public void ProtrusionDiameterB_SetValidValue_ValueIsStored()
         {
-            // Arrange
             var parameters = new Parameters();
 
-            // Act
             parameters.ProtrusionDiameter_b = 150;
 
-            // Assert
             Assert.AreEqual(150, parameters.ProtrusionDiameter_b);
         }
 
-        /// <summary>
-        /// Проверка выброса исключения при установке отрицательного диаметра выступу B.
-        /// </summary>
-        [Test]
-        public void ProtrusionDiameterB_SetNegativeValue_ThrowsException()
-        {
-            // Arrange
-            var parameters = new Parameters();
 
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                parameters.ProtrusionDiameter_b = -10;
-            });
-        }
-
-        /// <summary>
+        /// <description>
         /// Проверка корректности геттера диаметра выступу B.
-        /// </summary>
+        /// </description>
         [Test]
         public void ProtrusionDiameterB_GetValue_ReturnsCorrectValue()
         {
-            // Arrange
             var parameters = new Parameters();
             double expectedValue = 180.5;
 
-            // Act
             parameters.ProtrusionDiameter_b = expectedValue;
             double actualValue = parameters.ProtrusionDiameter_b;
 
-            // Assert
             Assert.AreEqual(expectedValue, actualValue);
         }
 
-        /// <summary>
+        /// <description>
         /// Проверка установки допустимого значения высоты D.
-        /// </summary>
+        /// </description>
         [Test]
         public void HeightD_SetValidValue_ValueIsStored()
         {
-            // Arrange
             var parameters = new Parameters();
 
-            // Act
             parameters.Height_d = 250;
 
-            // Assert
             Assert.AreEqual(250, parameters.Height_d);
         }
 
-        /// <summary>
-        /// Проверка выброса исключения при установке отрицательной высоты D.
-        /// </summary>
-        [Test]
-        public void HeightD_SetNegativeValue_ThrowsException()
-        {
-            // Arrange
-            var parameters = new Parameters();
-
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                parameters.Height_d = -50;
-            });
-        }
-
-
-        /// <summary>
+        /// <description>
         /// Проверка установки допустимого значения толщины C.
-        /// </summary>
+        /// </description>
         [Test]
         public void ThicknessC_SetValidValue_ValueIsStored()
         {
-            // Arrange
             var parameters = new Parameters();
 
-            // Act
             parameters.Thickness_c = 25;
 
-            // Assert
             Assert.AreEqual(25, parameters.Thickness_c);
         }
 
-        /// <summary>
+        /// <description>
         /// Проверка установки максимального допустимого значения толщины C.
-        /// </summary>
+        /// </description>
         [Test]
         public void ThicknessC_SetMaxBoundaryValue_ValueIsStored()
         {
-            // Arrange
             var parameters = new Parameters();
 
-            // Act
             parameters.Thickness_c = 100;
 
-            // Assert
             Assert.AreEqual(100, parameters.Thickness_c);
         }
 
 
-        /// <summary>
+        /// <description>
         /// Проверка установки допустимого значения диаметра отверстий E.
-        /// </summary>
+        /// </description>
         [Test]
         public void DiameterHolesE_SetValidValue_ValueIsStored()
         {
-            // Arrange
             var parameters = new Parameters();
 
-            // Act
             parameters.DiameterHoles_e = 50;
 
-            // Assert
             Assert.AreEqual(50, parameters.DiameterHoles_e);
         }
 
-        /// <summary>
-        /// Проверка выброса исключения при установке нулевого диаметра отверстий E.
-        /// </summary>
-        [Test]
-        public void DiameterHolesE_SetZeroValue_ThrowsException()
-        {
-            // Arrange
-            var parameters = new Parameters();
 
-            // Act & Assert
-            Assert.Throws<ArgumentException>(() =>
-            {
-                parameters.DiameterHoles_e = 0;
-            });
-        }
-
-        /// <summary>
+        /// <description>
         /// Проверка корректности геттера диаметра отверстий E.
-        /// </summary>
+        /// </description>
         [Test]
         public void DiameterHolesE_GetValue_ReturnsCorrectValue()
         {
-            // Arrange
             var parameters = new Parameters();
             double expectedValue = 75.5;
 
-            // Act
             parameters.DiameterHoles_e = expectedValue;
             double actualValue = parameters.DiameterHoles_e;
 
-            // Assert
             Assert.AreEqual(expectedValue, actualValue);
         }
 
-        /// <summary>
-        /// Проверка взаимосвязи свойств при установке значений.
-        /// Например, проверка что диаметр выступу B не может быть больше внешнего диаметра A.
-        /// </summary>
-        [Test]
-        public void ProtrusionDiameterB_CannotExceedOuterDiameterA_ThrowsException()
-        {
-            // Arrange
-            var parameters = new Parameters();
-            parameters.OuterDiameter_a = 200;
 
-            // Act & Assert
-            // Предполагаем, что диаметр выступу должен быть меньше внешнего диаметра
-            Assert.Throws<ArgumentException>(() =>
-            {
-                parameters.ProtrusionDiameter_b = 350; // Больше чем OuterDiameter_a
-            });
-        }
 
-        /// <summary>
+        /// <description>
         /// Проверка корректности последовательных операций чтения/записи.
-        /// </summary>
+        /// </description>
         [Test]
         public void Properties_MultipleSetGetOperations_WorkCorrectly()
         {
-            // Arrange
             var parameters = new Parameters();
 
-            // Act
+
             parameters.ProtrusionDiameter_b = 100;
             parameters.Height_d = 200;
             parameters.Thickness_c = 30;
             parameters.DiameterHoles_e = 40;
 
-            // Assert
             Assert.Multiple(() =>
             {
                 Assert.AreEqual(100, parameters.ProtrusionDiameter_b);
@@ -303,5 +180,183 @@ namespace UnitTest
                 Assert.AreEqual(40, parameters.DiameterHoles_e);
             });
         }
+
+        [Test]
+        public void MaxHoleDiameter_CorrectCalculation_ReturnsExpectedValue()
+        {
+
+            var parameters = new Parameters();
+            parameters.OuterDiameter_a = 200;
+            parameters.ProtrusionDiameter_b = 50;
+
+            double maxHoleDiameter = parameters.MaxHoleDiameter;
+
+            Assert.AreEqual(67.5,
+                maxHoleDiameter,
+                "Максимальный диаметр отверстий должен быть " +
+                "(200 - 50) * 0.45 = 67.5");
+        }
+
+        /// <description>
+        /// Проверка валидации параметров фланца
+        /// </description>
+        [Test]
+        public void ValidateParameters_CorrectParameters_NoErrors()
+        {
+            var parameters = new Parameters();
+            parameters.OuterDiameter_a = 200;
+            parameters.ProtrusionDiameter_b = 100;
+            parameters.Height_d = 250;
+            parameters.Thickness_c = 50;
+            parameters.DiameterHoles_e = 20;
+            parameters.NumberOfHoles_n = 4;
+            parameters.HoleStep = 0;
+
+            var errors = parameters.Validate();
+
+            Assert.IsEmpty(errors,
+                "Ошибки не должны возникать при корректных данных");
+        }
+
+        /// <description>
+        /// Проверка валидации параметров с ошибками
+        /// </description>
+        [Test]
+        public void ValidateParameters_WithErrors_ReturnsValidationErrors()
+        {
+            var parameters = new Parameters();
+            parameters.OuterDiameter_a = 200;
+            parameters.ProtrusionDiameter_b = 180;
+            parameters.Height_d = 350;
+            parameters.Thickness_c = 250;
+            parameters.DiameterHoles_e = 150;
+
+
+            var errors = parameters.Validate();
+
+            Assert.IsTrue(errors.ContainsKey
+               (ParameterType.ProtrusionDiameter),
+               "Ошибка: Диаметр выступа должен быть ≤ 0.75 * A");
+            Assert.IsTrue(errors.ContainsKey
+                (ParameterType.Height),
+                "Ошибка: Высота D должна быть в пределах диапазона");
+            Assert.IsTrue(errors.ContainsKey
+                (ParameterType.Thickness),
+                "Ошибка: Толщина C должна быть меньше A");
+            Assert.IsTrue(errors.ContainsKey
+                (ParameterType.DiameterHoles),
+                "Ошибка: Диаметр отверстий должен быть ≤ MaxHoleDiameter");
+        }
+
+        /// <description>
+        /// Проверка валидации максимального диаметра отверстий
+        /// </description>
+        [Test]
+        public void Validate_MaxHoleDiameter_ExceedsLimit_ThrowsError()
+        {
+            var parameters = new Parameters();
+            parameters.OuterDiameter_a = 200;
+            parameters.ProtrusionDiameter_b = 50;
+            parameters.DiameterHoles_e = 75;
+
+            var errors = parameters.Validate();
+
+            Assert.IsTrue(errors.ContainsKey(ParameterType.DiameterHoles),
+                "Ошибка: Диаметр отверстий должен быть ≤ 67.5");
+        }
+
+
+        /// </description>
+        /// Тест для проверки, что шаг в пределах 
+        /// допустимого диапазона не вызывает исключений.
+        /// </description>
+        [Test]
+        public void ValidateStep_StepWithinAllowedRange_ShouldPass()
+        {
+            var parameters = new Parameters
+            {
+                NumberOfHoles_n = 5,
+                HoleStep = 70
+            };
+
+            Assert.DoesNotThrow(() => parameters.ValidateStep(),
+                "Шаг в пределах допустимого диапазона.");
+        }
+
+        /// </description>
+        /// Тест для проверки, что при задании шага для 8 отверстий возникает исключение.
+        /// </description>
+        [Test]
+        public void ValidateStep_StepNotZeroForEightHoles_ShouldThrowException()
+        {
+            var parameters = new Parameters
+            {
+                NumberOfHoles_n = 8,
+                HoleStep = 45
+            };
+
+            var ex = Assert.Throws<InvalidOperationException>(()
+                => parameters.ValidateStep());
+
+            Assert.That(ex.Message, Is.EqualTo
+                ("Для 8 отверстий шаг не может быть задан."));
+        }
+
+
+        /// </description>
+        /// Тест для проверки, что при превышении шага более 130 градусов выбрасывается исключение.
+        /// </description>
+        [Test]
+        public void ValidateStep_StepExceeds130Degrees_ShouldThrowException()
+        {
+            var parameters = new Parameters
+            {
+                NumberOfHoles_n = 5,
+                HoleStep = 140
+            };
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(()
+                => parameters.ValidateStep());
+
+            Assert.That(ex.Message.Contains("Шаг не может превышать 130 градусов."),
+                        Is.True, "Сообщение об ошибке не совпадает.");
+        }
+
+        /// </description>
+        /// Тест для проверки, что при задании шага, 
+        /// превышающего 90 градусов, для 4 отверстий выбрасывается исключение.
+        /// </description>
+        [Test]
+        public void ValidateStep_StepGreaterThanMaxAllowed_ShouldThrowException()
+        {
+            var parameters = new Parameters
+            {
+                NumberOfHoles_n = 4,
+                HoleStep = 100
+            };
+
+            var ex = Assert.Throws<ArgumentOutOfRangeException>(() =>
+            parameters.ValidateStep());
+
+            Assert.That(ex.Message.Contains("Шаг не может быть больше " +
+                "90 для заданного количества отверстий."),
+                        Is.True, "Сообщение об ошибке не совпадает.");
+        }
+
+        /// </description>
+        /// Тест для проверки, что значение HoleStep_h устанавливается корректно.
+        /// </description>
+        [Test]
+        public void HoleStep_h_SetValidValue_ValueIsStored()
+        {
+            var parameters = new Parameters();
+            int expectedValue = 90;
+
+            parameters.HoleStep_h = expectedValue;
+
+            Assert.AreEqual(expectedValue, parameters.HoleStep_h,
+                "Значение HoleStep_h не было установлено корректно.");
+        }
     }
 }
+
