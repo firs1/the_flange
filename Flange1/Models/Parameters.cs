@@ -25,7 +25,6 @@ namespace Models
         {
             _parameters = new Dictionary<ParameterType, Parameter>
             {
-<<<<<<< HEAD
                 { ParameterType.OuterDiameter,      new Parameter(2, 400) },
                 { ParameterType.ProtrusionDiameter, new Parameter(1, 300) },
                 { ParameterType.Height,             new Parameter(2, 300) },
@@ -33,25 +32,6 @@ namespace Models
                 { ParameterType.DiameterHoles,      new Parameter(0.1, 300) },
                 { ParameterType.HolesAmount,        new Parameter(1, 8) },
                 { ParameterType.HoleStep,           new Parameter(0, 130) }
-=======
-                // Внешний диаметр (A): от 1 до 400
-                { ParameterType.OuterDiameterA,      new Parameter(1, 400) },
-                
-                // Диаметр выступа (B): от 1 до 300
-                { ParameterType.ProtrusionDiameterB, new Parameter(1, 300) },
-                
-                // Высота (D): от 1 до 300
-                { ParameterType.HeightD,             new Parameter(1, 300) },
-                
-                // Толщина (C): от 1 до 400
-                { ParameterType.ThicknessC,          new Parameter(1, 400) },
-                
-                // Диаметр отверстий (E): от 0.1 до 300
-                { ParameterType.DiameterHolesE,      new Parameter(0.1, 100) },
-                
-                // Количество отверстий (N): от 1 до 8
-                { ParameterType.HolesAmountN,        new Parameter(1, 8)  }
->>>>>>> 0ebf6ca3fa7b26eea5f150d87f319debcb922927
             };
         }
 

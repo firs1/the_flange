@@ -292,10 +292,7 @@ namespace Flange1
             label17.Size = new Size(99, 15);
             label17.TabIndex = 23;
             label17.Text = "0 < е < (a-b)*0,45";
-<<<<<<< HEAD:Flange1/Flange1/MainForm.Designer.cs
             label17.Click += label17_Click;
-=======
->>>>>>> 0ebf6ca3fa7b26eea5f150d87f319debcb922927:Flange1/Flange1/Form1.Designer.cs
             // 
             // groupBox1
             // 

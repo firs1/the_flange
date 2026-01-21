@@ -267,8 +267,7 @@ namespace UnitTest
 
 
         /// </description>
-        /// Тест для проверки, что шаг в пределах 
-        /// допустимого диапазона не вызывает исключений.
+        /// Тест для проверки, что шаг в пределах допустимого диапазона не вызывает исключений.
         /// </description>
         [Test]
         public void ValidateStep_StepWithinAllowedRange_ShouldPass()
@@ -323,8 +322,7 @@ namespace UnitTest
         }
 
         /// </description>
-        /// Тест для проверки, что при задании шага, 
-        /// превышающего 90 градусов, для 4 отверстий выбрасывается исключение.
+        /// Тест для проверки, что при задании шага, превышающего 90 градусов, для 4 отверстий выбрасывается исключение.
         /// </description>
         [Test]
         public void ValidateStep_StepGreaterThanMaxAllowed_ShouldThrowException()
