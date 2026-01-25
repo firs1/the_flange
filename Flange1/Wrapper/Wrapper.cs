@@ -18,7 +18,13 @@ namespace Wrapper
         /// </summary>
         private KompasObject? _kompas;
 
-        //TODO: XML
+        /// <summary>
+        /// Угловой шаг между отверстиями при построении фланца, в градусах.
+        /// </summary>
+        /// <remarks>
+        /// Используется при расчёте расположения отверстий.
+        /// Значение 0 означает автоматический расчёт шага.
+        /// </remarks>
         public double HoleStep { get; set; } = 0;
 
         /// <summary>
@@ -181,6 +187,7 @@ namespace Wrapper
             double diskHeight,
             double holeRadius,
             double angle)
+
         {
             double x = holeRadius * Math.Cos(angle);
             double y = holeRadius * Math.Sin(angle);
@@ -205,8 +212,7 @@ namespace Wrapper
 
             var cutDef = (ksCutExtrusionDefinition)cut.GetDefinition();
             cutDef.SetSketch(sketch);
-            //TODO: to const
-            cutDef.SetSideParam(true, 2, diskHeight + 40);
+            cutDef.SetSideParam(true, 2, diskHeight);
             cut.Create();
         }
     }

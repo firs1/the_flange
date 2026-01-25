@@ -204,21 +204,6 @@ namespace Flange1
 
         #region Пустые обработчики
 
-        //TODO: remove
-        private void label3_Click(object sender, EventArgs e) { }
-        private void label5_Click(object sender, EventArgs e) { }
-        private void label6_Click(object sender, EventArgs e) { }
-        private void label16_Click(object sender, EventArgs e) { }
-        private void label12_Click(object sender, EventArgs e) { }
-        private void textBoxB_TextChanged(object sender, EventArgs e) { }
-        private void textBox6_TextChanged(object sender, EventArgs e) { }
-        private void textBoxC_TextChanged(object sender, EventArgs e) { }
-        private void textBox_TextChanged(object sender, EventArgs e) { }
-        private void textBoxE_TextChanged(object sender, EventArgs e) { }
-        private void textBoxN_TextChanged(object sender, EventArgs e) { }
-        private void groupBox1_Enter(object sender, EventArgs e) { }
-        private void groupBox2_Enter(object sender, EventArgs e) { }
-        private void label17_Click(object sender, EventArgs e) { }
 
         #endregion
 

@@ -44,6 +44,7 @@ namespace Wrapper
             double holeDiameter = p.DiameterHoles_e;
             int holeCount = p.NumberOfHoles_n;
             int holeStep = p.HoleStep_h;
+            double infelicity = 1.1; // Погрешность
 
             _wrapper.CreateBaseCylinder(part, a, c);
 
@@ -51,10 +52,9 @@ namespace Wrapper
             _wrapper.CreateCylinderOnPlane(part, topPlane, b, d);
 
             double holeRadius = (a / 2 + b / 2) / 2;
-            //TODO: to const
             // Примерный угол, который занимает один вырез
             // 1.1 нужен для границы погрешности сверху
-            double aproxAngleDiameter = 1.1 * 360 / 
+            double aproxAngleDiameter = infelicity * 360 / 
                 (p.OuterDiameter_a * Math.PI / p.DiameterHoles_e);
 
             if(holeCount == 8)
@@ -67,7 +67,7 @@ namespace Wrapper
             // Используется отступ чтобы не было наложения
             if (holeCount != 8 && p.HoleStep != 0 && p.HoleStep < aproxAngleDiameter)
             {
-                holeStep = (int)p.HoleStep_h + (int)p.DiameterHoles_e;
+                holeStep = (int)p.HoleStep_h + (int)p.DiameterHoles_e / 2 + 2;
             }
 
             if (p.HoleStep == 0 || p.HoleStep > (int)aproxAngleDiameter)

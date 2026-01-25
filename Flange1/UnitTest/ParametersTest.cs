@@ -8,19 +8,17 @@ using NUnit.Framework;
 
 namespace UnitTest
 {
-    /// <description>
+    /// <summary>
     /// Юнит-тесты для класса Parameters.
     /// Проверяют корректную работу свойств
     /// и соблюдение ограничений параметров.
-    /// </description>
+    /// </summary>
     [TestFixture]
     public class ParametersTests
     {
-        //TODO: description
-        /// <description>
-        /// Проверка установки допустимого значения внешнего диаметра.
-        /// </description>
-        [TestCase, Description( "123")]
+
+        [TestCase, Description("Проверка установки допустимого " +
+            "значения внешнего диаметра")]
         public void OuterDiameterA_SetValidValue_ValueIsStored()
         {
             var parameters = new Parameters();
@@ -31,10 +29,8 @@ namespace UnitTest
         }
 
 
-        /// <description>
-        /// Проверка установки граничного максимального значения высоты.
-        /// </description>
-        [Test]
+        [TestCase, Description("Проверка установки граничного " +
+            "максимального значения высоты.")]
         public void HeightD_SetMaxBoundaryValue_ValueIsStored()
         {
             var parameters = new Parameters();
@@ -44,11 +40,8 @@ namespace UnitTest
             Assert.AreEqual(300, parameters.Height_d);
         }
 
-        /// <description>
-        /// Проверка корректного преобразования 
-        /// количества отверстий в целое число.
-        /// </description>
-        [Test]
+        [TestCase, Description("Проверка корректного преобразования количества " +
+            "отверстий в целое число.")]
         public void NumberOfHoles_IsReturnedAsInt()
         {
             var parameters = new Parameters();
@@ -59,10 +52,8 @@ namespace UnitTest
         }
 
 
-        /// <description>
-        /// Проверка установки допустимого значения диаметра выступу B.
-        /// </description>
-        [Test]
+        [TestCase, Description("Проверка установки допустимого " +
+            "значения диаметра выступа.")]
         public void ProtrusionDiameterB_SetValidValue_ValueIsStored()
         {
             var parameters = new Parameters();
@@ -73,10 +64,7 @@ namespace UnitTest
         }
 
 
-        /// <description>
-        /// Проверка корректности геттера диаметра выступу B.
-        /// </description>
-        [Test]
+         [TestCase, Description("Проверка корректности геттера диаметра выступа.")]
         public void ProtrusionDiameterB_GetValue_ReturnsCorrectValue()
         {
             var parameters = new Parameters();
@@ -88,10 +76,7 @@ namespace UnitTest
             Assert.AreEqual(expectedValue, actualValue);
         }
 
-        /// <description>
-        /// Проверка установки допустимого значения высоты D.
-        /// </description>
-        [Test]
+        [TestCase, Description("Проверка установки допустимого значения высоты.")]
         public void HeightD_SetValidValue_ValueIsStored()
         {
             var parameters = new Parameters();
@@ -101,10 +86,8 @@ namespace UnitTest
             Assert.AreEqual(250, parameters.Height_d);
         }
 
-        /// <description>
-        /// Проверка установки допустимого значения толщины C.
-        /// </description>
-        [Test]
+
+        [TestCase, Description("Проверка установки допустимого значения толщины.")]
         public void ThicknessC_SetValidValue_ValueIsStored()
         {
             var parameters = new Parameters();
@@ -114,10 +97,9 @@ namespace UnitTest
             Assert.AreEqual(25, parameters.Thickness_c);
         }
 
-        /// <description>
-        /// Проверка установки максимального допустимого значения толщины C.
-        /// </description>
-        [Test]
+
+        [TestCase, Description("Проверка установки максимального " +
+            "допустимого значения толщины.")]
         public void ThicknessC_SetMaxBoundaryValue_ValueIsStored()
         {
             var parameters = new Parameters();
@@ -128,10 +110,8 @@ namespace UnitTest
         }
 
 
-        /// <description>
-        /// Проверка установки допустимого значения диаметра отверстий E.
-        /// </description>
-        [Test]
+        [TestCase, Description("Проверка установки допустимого " +
+            "значения диаметра отверстий.")]
         public void DiameterHolesE_SetValidValue_ValueIsStored()
         {
             var parameters = new Parameters();
@@ -142,10 +122,7 @@ namespace UnitTest
         }
 
 
-        /// <description>
-        /// Проверка корректности геттера диаметра отверстий E.
-        /// </description>
-        [Test]
+        [TestCase, Description("Проверка корректности геттера диаметра отверстий.")]
         public void DiameterHolesE_GetValue_ReturnsCorrectValue()
         {
             var parameters = new Parameters();
@@ -158,11 +135,8 @@ namespace UnitTest
         }
 
 
-
-        /// <description>
-        /// Проверка корректности последовательных операций чтения/записи.
-        /// </description>
-        [Test]
+        [TestCase, Description("Проверка корректности последовательных " +
+            "операций чтения/записи.")]
         public void Properties_MultipleSetGetOperations_WorkCorrectly()
         {
             var parameters = new Parameters();
@@ -182,7 +156,8 @@ namespace UnitTest
             });
         }
 
-        [Test]
+        [TestCase, Description("Проверка установки значения " +
+            "меньше максимального.")]
         public void MaxHoleDiameter_CorrectCalculation_ReturnsExpectedValue()
         {
 
@@ -198,10 +173,8 @@ namespace UnitTest
                 "(200 - 50) * 0.45 = 67.5");
         }
 
-        /// <description>
-        /// Проверка валидации параметров фланца
-        /// </description>
-        [Test]
+
+        [TestCase, Description("Проверка валидации параметров фланца")]
         public void ValidateParameters_CorrectParameters_NoErrors()
         {
             var parameters = new Parameters();
@@ -219,40 +192,34 @@ namespace UnitTest
                 "Ошибки не должны возникать при корректных данных");
         }
 
-        /// <description>
-        /// Проверка валидации параметров с ошибками
-        /// </description>
-        [Test]
+
+        [TestCase, Description("Проверка валидации параметров с ошибками")]
         public void ValidateParameters_WithErrors_ReturnsValidationErrors()
         {
             var parameters = new Parameters();
-            parameters.OuterDiameter_a = 200;
-            parameters.ProtrusionDiameter_b = 180;
-            parameters.Height_d = 350;
-            parameters.Thickness_c = 250;
-            parameters.DiameterHoles_e = 150;
 
+            parameters.OuterDiameter_a = 200;
+
+            parameters.ProtrusionDiameter_b = 160; // > 0.75 * 200 = 150
+
+            parameters.Height_d = 300;
+            parameters.Thickness_c = 250;
+            parameters.DiameterHoles_e = 120;
 
             var errors = parameters.Validate();
 
-            Assert.IsTrue(errors.ContainsKey
-               (ParameterType.ProtrusionDiameter),
-               "Ошибка: Диаметр выступа должен быть ≤ 0.75 * A");
-            Assert.IsTrue(errors.ContainsKey
-                (ParameterType.Height),
-                "Ошибка: Высота D должна быть в пределах диапазона");
-            Assert.IsTrue(errors.ContainsKey
-                (ParameterType.Thickness),
-                "Ошибка: Толщина C должна быть меньше A");
-            Assert.IsTrue(errors.ContainsKey
-                (ParameterType.DiameterHoles),
-                "Ошибка: Диаметр отверстий должен быть ≤ MaxHoleDiameter");
+            Assert.IsTrue(errors.ContainsKey(ParameterType.ProtrusionDiameter),
+                "Диаметр выступа должен быть ≤ 0.75 * A");
+
+            Assert.IsTrue(errors.ContainsKey(ParameterType.Thickness),
+                "Толщина C должна быть меньше A");
+
+            Assert.IsTrue(errors.ContainsKey(ParameterType.DiameterHoles),
+                "Диаметр отверстий должен быть ≤ MaxHoleDiameter");
         }
 
-        /// <description>
-        /// Проверка валидации максимального диаметра отверстий
-        /// </description>
-        [Test]
+
+        [TestCase, Description("Проверка валидации максимального диаметра отверстий")]
         public void Validate_MaxHoleDiameter_ExceedsLimit_ThrowsError()
         {
             var parameters = new Parameters();
@@ -267,11 +234,8 @@ namespace UnitTest
         }
 
 
-        /// </description>
-        /// Тест для проверки, что шаг в пределах 
-        /// допустимого диапазона не вызывает исключений.
-        /// </description>
-        [Test]
+        [TestCase, Description("Тест для проверки, что шаг в" +
+            " пределах допустимого диапазона не вызывает исключений.")]
         public void ValidateStep_StepWithinAllowedRange_ShouldPass()
         {
             var parameters = new Parameters
@@ -284,11 +248,8 @@ namespace UnitTest
                 "Шаг в пределах допустимого диапазона.");
         }
 
-        /// </description>
-        /// Тест для проверки, что при задании шага для 
-        /// 8 отверстий возникает исключение.
-        /// </description>
-        [Test]
+        [TestCase, Description("Тест для проверки, что шаг в " +
+            "пределах допустимого диапазона не вызывает исключений.")]
         public void ValidateStep_StepNotZeroForEightHoles_ShouldThrowException()
         {
             var parameters = new Parameters
@@ -305,31 +266,8 @@ namespace UnitTest
         }
 
 
-        /// </description>
-        /// Тест для проверки, что при превышении шага 
-        /// более 130 градусов выбрасывается исключение.
-        /// </description>
-        [Test]
-        public void ValidateStep_StepExceeds130Degrees_ShouldThrowException()
-        {
-            var parameters = new Parameters
-            {
-                NumberOfHoles_n = 5,
-                HoleStep = 140
-            };
-
-            var ex = Assert.Throws<ArgumentOutOfRangeException>(()
-                => parameters.ValidateStep());
-
-            Assert.That(ex.Message.Contains("Шаг не может превышать 130 градусов."),
-                        Is.True, "Сообщение об ошибке не совпадает.");
-        }
-
-        /// </description>
-        /// Тест для проверки, что при задании шага, превышающего 90 
-        /// градусов, для 4 отверстий выбрасывается исключение.
-        /// </description>
-        [Test]
+        [TestCase, Description("Тест для проверки, что при задании шага, превышающего" +
+            " 90 градусов, для 4 отверстий выбрасывается исключение. ")]
         public void ValidateStep_StepGreaterThanMaxAllowed_ShouldThrowException()
         {
             var parameters = new Parameters
@@ -346,10 +284,7 @@ namespace UnitTest
                         Is.True, "Сообщение об ошибке не совпадает.");
         }
 
-        /// </description>
-        /// Тест для проверки, что значение HoleStep_h устанавливается корректно.
-        /// </description>
-        [Test]
+        [TestCase, Description("Тест для проверки, что значение HoleStep_h устанавливается корректно")]
         public void HoleStep_h_SetValidValue_ValueIsStored()
         {
             var parameters = new Parameters();
@@ -360,6 +295,32 @@ namespace UnitTest
             Assert.AreEqual(expectedValue, parameters.HoleStep_h,
                 "Значение HoleStep_h не было установлено корректно.");
         }
+
+
+        [TestCase, Description("Тест для проверки, что значение Height_d" +
+            " выдаёт ошибку при некорректном вводе")]
+        public void Validate_ValueGreaterThanMax_ReturnsError()
+        {
+            var parameters = new Parameters();
+            parameters.Height_d = 350; // max = 300
+
+            var errors = parameters.Validate();
+
+            Assert.That(errors.ContainsKey(ParameterType.Height), Is.True);
+        }
+
+
+        [TestCase, Description("Тест для проверки, что значение OuterDiameter_a" +
+            " устанавливается корректно")]
+        public void Validate_ValueLessThanMin_ReturnsError()
+        {
+            var parameters = new Parameters();
+            parameters.OuterDiameter_a = 1; // min = 2
+
+            var errors = parameters.Validate();
+
+            Assert.That(errors.ContainsKey(ParameterType.OuterDiameter), Is.True);
+        }
+
     }
 }
-

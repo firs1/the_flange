@@ -1,17 +1,16 @@
 ﻿namespace Models
 {
     /// <summary>
-    /// Имена параметров
+    /// Имена параметров фланца.
     /// </summary>
     public enum ParameterType
     {
-        //TODO: XML
-        Height,
-        DiameterHoles,
-        HolesAmount,
-        ProtrusionDiameter,
-        OuterDiameter,
-        Thickness,
-        HoleStep
+        Height,                 // Высота фланца.
+        DiameterHoles,          // Диаметр отверстий.
+        HolesAmount,            // Количество отверстий.
+        ProtrusionDiameter,     // Диаметр выступа фланца.
+        OuterDiameter,          // Наружный диаметр фланца.
+        Thickness,              // Толщина фланца.
+        HoleStep                // Угловой шаг между отверстиями, в градусах.
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Models
 {
@@ -60,36 +61,34 @@ namespace Models
         public void ValidateStep()
         {
             if (NumberOfHoles_n == 8 && HoleStep != 0)
-            {
-                throw new InvalidOperationException("Для 8 отверстий" +
-                    " шаг не может быть задан.");
-            }
-
-            if (HoleStep > 130)
-            {
-                throw new ArgumentOutOfRangeException(nameof(HoleStep), 
-                    "Шаг не может превышать 130 градусов.");
-            }
+                throw new InvalidOperationException(
+                    "Для 8 отверстий шаг не может быть задан.");
 
             double maxStep = 360.0 / NumberOfHoles_n;
+
             if (HoleStep > maxStep)
-            {
-                throw new ArgumentOutOfRangeException(nameof(HoleStep),
-                    $"Шаг не может быть больше {maxStep} для заданного " +
-                    $"количества отверстий.");
-            }
+                throw new ArgumentOutOfRangeException(
+                    nameof(HoleStep),
+                    $"Шаг не может быть больше {maxStep} для заданного количества отверстий.");
         }
 
         #region Base access
 
-        //TODO: XML
+        /// <summary>
+        /// Устанавливает значение параметра по его типу.
+        /// </summary>
+        /// <param name="type">Тип параметра.</param>
+        /// <param name="value">Новое значение параметра.</param>
         public void SetParameter(ParameterType type, double value)
         {
             _parameters[type].Value = value;
         }
 
-
-        //TODO: XML
+        /// <summary>
+        /// Возвращает значение параметра по его типу.
+        /// </summary>
+        /// <param name="type">Тип параметра.</param>
+        /// <returns>Текущее значение параметра.</returns>
         public double GetParameter(ParameterType type)
         {
             return _parameters[type].Value;
@@ -99,63 +98,83 @@ namespace Models
 
         #region Strongly typed properties
 
-        //TODO: XML
+        /// <summary>
+        /// Наружный диаметр фланца.
+        /// </summary>
         public double OuterDiameter_a
         {
             get => GetParameter(ParameterType.OuterDiameter);
             set => SetParameter(ParameterType.OuterDiameter, value);
         }
 
-        //TODO: XML
+        /// <summary>
+        /// Диаметр выступа фланца.
+        /// </summary>
         public double ProtrusionDiameter_b
         {
             get => GetParameter(ParameterType.ProtrusionDiameter);
             set => SetParameter(ParameterType.ProtrusionDiameter, value);
         }
 
-        //TODO: XML
+        /// <summary>
+        /// Высота фланца.
+        /// </summary>
         public double Height_d
         {
             get => GetParameter(ParameterType.Height);
             set => SetParameter(ParameterType.Height, value);
         }
 
-        //TODO: XML
+        /// <summary>
+        /// Толщина фланца.
+        /// </summary>
         public double Thickness_c
         {
             get => GetParameter(ParameterType.Thickness);
             set => SetParameter(ParameterType.Thickness, value);
         }
 
-        //TODO: XML
+        /// <summary>
+        /// Диаметр отверстий.
+        /// </summary>
         public double DiameterHoles_e
         {
             get => GetParameter(ParameterType.DiameterHoles);
             set => SetParameter(ParameterType.DiameterHoles, value);
         }
 
-        //TODO: XML
+        /// <summary>
+        /// Количество отверстий.
+        /// </summary>
         public int NumberOfHoles_n
         {
             get => (int)GetParameter(ParameterType.HolesAmount);
             set => SetParameter(ParameterType.HolesAmount, value);
         }
 
-        //TODO: XML
+        /// <summary>
+        /// Угловой шаг между отверстиями.
+        /// </summary>
         public int HoleStep_h
         {
             get => (int)GetParameter(ParameterType.HoleStep);
             set => SetParameter(ParameterType.HoleStep, value);
         }
+
         #endregion
 
         #region Derived constraints
 
-        //TODO: XML
+        /// <summary>
+        /// Максимально допустимый диаметр отверстий,
+        /// вычисляемый на основе наружного диаметра и диаметра выступа.
+        /// </summary>
+        
         public double MaxHoleDiameter =>
             (OuterDiameter_a - ProtrusionDiameter_b) * 0.45;
 
         #endregion
+
 
         #region Validation
 
@@ -179,28 +198,31 @@ namespace Models
                 }
             }
 
-            //TODO: {}
-            //TODO: to const
-            if (ProtrusionDiameter_b > 0.75 * OuterDiameter_a)
+            double AcceptableSize = 0.75;
+            if (ProtrusionDiameter_b > AcceptableSize * OuterDiameter_a)
+            {
                 errors[ParameterType.ProtrusionDiameter] =
                     "Диаметр выступа B должен быть ≤ 0.75 * A";
+            }
 
-            //TODO: {}
             if (Thickness_c >= OuterDiameter_a)
-                errors[ParameterType.Thickness] =
-                    "Толщина C должна быть меньше A";
+            { 
+            errors[ParameterType.Thickness] =
+                "Толщина C должна быть меньше A";
+            }
 
-            //TODO: {}
             if (DiameterHoles_e > MaxHoleDiameter)
+            {
                 errors[ParameterType.DiameterHoles] =
                     $"Диаметр отверстий E должен быть ≤ {MaxHoleDiameter:F2}";
+            }
 
             double maxStep = 360.0 / NumberOfHoles_n;
             if (HoleStep_h <= 0 || HoleStep_h > maxStep)
             {
                 errors[ParameterType.HoleStep] =
                     $"Шаг отверстий должен быть в пределах от" +
-                    $" 0 до {maxStep} градусов для {NumberOfHoles_n} " +
+                    $" 0 до {maxStep} градусов для {NumberOfHoles_n:F2} " +
                     $"отверстий.";
             }
 

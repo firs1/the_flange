@@ -102,7 +102,6 @@ namespace Flange1
             label3.Size = new Size(152, 20);
             label3.TabIndex = 3;
             label3.Text = "Диаметр выступа(b):";
-            label3.Click += label3_Click;
             // 
             // ProtrusionDiameter
             // 
@@ -112,7 +111,6 @@ namespace Flange1
             ProtrusionDiameter.Size = new Size(95, 27);
             ProtrusionDiameter.TabIndex = 4;
             ProtrusionDiameter.Text = "150";
-            ProtrusionDiameter.TextChanged += textBoxB_TextChanged;
             // 
             // label4
             // 
@@ -131,7 +129,6 @@ namespace Flange1
             label5.Size = new Size(81, 20);
             label5.TabIndex = 6;
             label5.Text = "Высота(d):";
-            label5.Click += label5_Click;
             // 
             // label6
             // 
@@ -141,7 +138,6 @@ namespace Flange1
             label6.Size = new Size(34, 20);
             label6.TabIndex = 8;
             label6.Text = "мм.";
-            label6.Click += label6_Click;
             // 
             // label7
             // 
@@ -177,7 +173,6 @@ namespace Flange1
             Thickness.Size = new Size(95, 27);
             Thickness.TabIndex = 12;
             Thickness.Text = "50";
-            Thickness.TextChanged += textBox_TextChanged;
             // 
             // label9
             // 
@@ -195,7 +190,6 @@ namespace Flange1
             DiameterHoles.Size = new Size(95, 27);
             DiameterHoles.TabIndex = 14;
             DiameterHoles.Text = "15";
-            DiameterHoles.TextChanged += textBox6_TextChanged;
             // 
             // label10
             // 
@@ -234,7 +228,6 @@ namespace Flange1
             label12.Size = new Size(87, 20);
             label12.TabIndex = 18;
             label12.Text = "От 2 до 400";
-            label12.Click += label12_Click;
             // 
             // label13
             // 
@@ -275,7 +268,6 @@ namespace Flange1
             label16.Size = new Size(42, 20);
             label16.TabIndex = 22;
             label16.Text = "c < а";
-            label16.Click += label16_Click;
             // 
             // label17
             // 
@@ -286,7 +278,6 @@ namespace Flange1
             label17.Size = new Size(127, 20);
             label17.TabIndex = 23;
             label17.Text = "0 < е < (a-b)*0,45";
-            label17.Click += label17_Click;
             // 
             // groupBox1
             // 
@@ -318,7 +309,6 @@ namespace Flange1
             groupBox1.TabIndex = 24;
             groupBox1.TabStop = false;
             groupBox1.Text = "Ввод Размеров";
-            groupBox1.Enter += groupBox1_Enter;
             // 
             // label20
             // 
@@ -373,7 +363,6 @@ namespace Flange1
             groupBox2.TabIndex = 25;
             groupBox2.TabStop = false;
             groupBox2.Text = "Допустимые размеры";
-            groupBox2.Enter += groupBox2_Enter;
             // 
             // label19
             // 

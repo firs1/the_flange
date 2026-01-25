@@ -6,10 +6,20 @@
     /// </summary>
     public class Parameter
     {
-        //TODO: XML
-        private double _min;   // Минимально допустимое значение
-        private double _max;   // Максимально допустимое значение
-        private double _value;          // Текущее значение
+        /// <summary>
+        /// Минимально допустимое значение параметра.
+        /// </summary>
+        private double _min;
+
+        /// <summary>
+        /// Максимально допустимое значение параметра.
+        /// </summary>
+        private double _max;
+
+        /// <summary>
+        /// Текущее значение параметра.
+        /// </summary>
+        private double _value;
 
         /// <summary>
         /// Инициализирует параметр с заданными 
@@ -18,12 +28,15 @@
         /// <param name="min">Минимальное допустимое значение</param>
         /// <param name="max">Максимальное допустимое значение</param>
         /// <param name="value">Начальное значение</param>
-        public Parameter(double min, double max, double value = 0)
+        public Parameter(double min, double max, double? value = null)
         {
-            //TODO: validation
+            if (min > max)
+                throw new ArgumentException("Минимальное значение не может быть больше максимального.");
+
             _min = min;
             _max = max;
-            _value = value;
+
+            _value = value ?? min;
         }
 
         /// <summary>
@@ -32,7 +45,6 @@
         public double Value
         {
             get => _value;
-            //TODO: validation
             set => _value = value;
         }
 
