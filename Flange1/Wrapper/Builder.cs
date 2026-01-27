@@ -30,81 +30,105 @@ namespace Wrapper
         /// Строит 3D-модель фланца по заданным параметрам.
         /// </summary>
         /// <param name="p">Параметры фланца для построения модели.</param>
-        public void BuildModel(Parameters p)
+        public void BuildModel( Parameters p, bool closeDocumentAfterBuild = false)
         {
+            if (p == null)
+                throw new ArgumentNullException(nameof(p));
+
             _wrapper.AttachOrRunCAD();
+            _wrapper.CreateDocument3D();
 
-            var doc = _wrapper.CreateDocument3D();
-            var part = _wrapper.GetPart(doc);
-
-            double a = p.OuterDiameter_a;
-            double b = p.ProtrusionDiameter_b;
-            double c = p.Thickness_c;
-            double d = p.Height_d;
-            double holeDiameter = p.DiameterHoles_e;
-            int holeCount = p.NumberOfHoles_n;
-            int holeStep = p.HoleStep_h;
-            double infelicity = 1.1; // Погрешность
-
-            _wrapper.CreateBaseCylinder(part, a, c);
-
-            var topPlane = _wrapper.CreateOffsetPlane(part, c);
-            _wrapper.CreateCylinderOnPlane(part, topPlane, b, d);
-
-            double holeRadius = (a / 2 + b / 2) / 2;
-            // Примерный угол, который занимает один вырез
-            // 1.1 нужен для границы погрешности сверху
-            double aproxAngleDiameter = infelicity * 360 / 
-                (p.OuterDiameter_a * Math.PI / p.DiameterHoles_e);
-
-            if(holeCount == 8)
-
+            try
             {
-                holeStep = 360 / (int)holeCount;  
-            }
+                var part = _wrapper.GetPart();
 
-            // Если aproxAngleDiameter > p.HoleStep, отверстия накладываются друг на друга
-            // Используется отступ чтобы не было наложения
-            if (holeCount != 8 && p.HoleStep != 0 && p.HoleStep < aproxAngleDiameter)
+                double a = p.OuterDiameter_a;
+                double b = p.ProtrusionDiameter_b;
+                double c = p.Thickness_c;
+                double d = p.Height_d;
+                double holeDiameter = p.DiameterHoles_e;
+                int holeCount = p.NumberOfHoles_n;
+                int holeStep = p.HoleStep_h;
+                double infelicity = 1.1;
+
+                _wrapper.CreateBaseCylinder(part, a, c);
+
+                var topPlane = _wrapper.CreateOffsetPlane(part, c);
+                _wrapper.CreateCylinderOnPlane(part, topPlane, b, d);
+
+                double holeRadius = (a / 2 + b / 2) / 2;
+
+                double aproxAngleDiameter =
+                    infelicity * 360 /
+                    (p.OuterDiameter_a * Math.PI / p.DiameterHoles_e);
+
+                if (holeCount == 8)
+                {
+                    holeStep = 360 / holeCount;
+                }
+
+                if (holeCount != 8 &&
+                    p.HoleStep_h != 0 &&
+                    p.HoleStep_h < aproxAngleDiameter)
+                {
+                    holeStep =
+                        p.HoleStep_h +
+                        (int)p.DiameterHoles_e / 2 + 2;
+                }
+
+                if (p.HoleStep_h == 0 ||
+                    p.HoleStep_h > aproxAngleDiameter)
+                {
+                    holeStep = p.HoleStep_h;
+                }
+
+                var basePlane =
+                    part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
+
+                var sketch =
+                    (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
+                var sketchDef =
+                    (ksSketchDefinition)sketch.GetDefinition();
+
+                sketchDef.SetPlane(basePlane);
+                sketch.Create();
+
+                var doc2D =
+                    (ksDocument2D)sketchDef.BeginEdit();
+
+                for (int i = 0; i < holeCount; i++)
+                {
+                    double angleRad =
+                        holeStep * i * Math.PI / 180.0;
+
+                    double x =
+                        holeRadius * Math.Cos(angleRad);
+                    double y =
+                        holeRadius * Math.Sin(angleRad);
+
+                    doc2D.ksCircle(x, y, holeDiameter / 2, 1);
+                }
+
+                sketchDef.EndEdit();
+
+                var cut =
+                    (ksEntity)part.NewEntity(
+                        (short)Obj3dType.o3d_cutExtrusion);
+
+                var cutDef =
+                    (ksCutExtrusionDefinition)cut.GetDefinition();
+
+                cutDef.SetSketch(sketch);
+                cutDef.SetSideParam(false, 1, c + 1);
+                cut.Create();
+            }
+            finally
             {
-                holeStep = (int)p.HoleStep_h + (int)p.DiameterHoles_e / 2 + 2;
+                if (closeDocumentAfterBuild)
+                {
+                    _wrapper.CloseActiveDocument3D(save: false);
+                }
             }
-
-            if (p.HoleStep == 0 || p.HoleStep > (int)aproxAngleDiameter)
-            {
-                holeStep = p.HoleStep_h;
-            }
-
-            var basePlane =
-                part.GetDefaultEntity((short)Obj3dType.o3d_planeXOY);
-            var sketch =
-                (ksEntity)part.NewEntity((short)Obj3dType.o3d_sketch);
-            var sketchDef =
-                (ksSketchDefinition)sketch.GetDefinition();
-
-            sketchDef.SetPlane(basePlane);
-            sketch.Create();
-            var doc2D = (ksDocument2D)sketchDef.BeginEdit();
-
-            for (int i = 0; i < holeCount; i++)
-            {
-                double angle = holeStep * i; 
-                double angleInRadians = angle * Math.PI / 180;
-
-                double x = holeRadius * Math.Cos(angleInRadians);
-                double y = holeRadius * Math.Sin(angleInRadians);
-
-                doc2D.ksCircle(x, y, holeDiameter / 2, 1);
-            }
-
-            sketchDef.EndEdit();
-            var cut = 
-                (ksEntity)part.NewEntity((short)Obj3dType.o3d_cutExtrusion);
-
-            var cutDef = (ksCutExtrusionDefinition)cut.GetDefinition();
-            cutDef.SetSketch(sketch);
-            cutDef.SetSideParam(false, 1, c + 1);
-            cut.Create();
         }
     }
 }

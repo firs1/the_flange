@@ -1,6 +1,10 @@
-﻿using System;
-using Kompas6API5;
+﻿using Kompas6API5;
 using Kompas6Constants3D;
+using KompasAPI7;
+using System;
+using System.Reflection;
+using System.Runtime.InteropServices;
+
 
 namespace Wrapper
 {
@@ -17,6 +21,8 @@ namespace Wrapper
         /// или подключение не было выполнено.
         /// </summary>
         private KompasObject? _kompas;
+        private ksDocument3D? _doc3D;
+        private ksPart? _part;
 
         /// <summary>
         /// Угловой шаг между отверстиями при построении фланца, в градусах.
@@ -35,32 +41,148 @@ namespace Wrapper
         /// невозможности подключения или запуска КОМПАС.</exception>
         public void AttachOrRunCAD()
         {
-            var type = Type.GetTypeFromProgID("KOMPAS.Application.5");
+            if (_kompas != null)
+                return; 
 
-            if (type == null)
+            try
             {
-                throw new Exception("Не удалось получить ProgID KOMPАС.");
+                Type kompasType = Type.GetTypeFromProgID("KOMPAS.Application.5");
+                if (kompasType == null)
+                    throw new Exception("Не удалось получить ProgID КОМПАС.");
+
+                // Создаём новый экземпляр только если _kompas еще null
+                _kompas = Activator.CreateInstance(kompasType) as KompasObject;
+                if (_kompas == null)
+                    throw new Exception("Не удалось запустить КОМПАС.");
             }
-
-            _kompas = Activator.CreateInstance(type) as KompasObject;
-
-            if (_kompas == null)
+            catch (Exception ex)
             {
-                throw new Exception("Компас не удалось запустить.");
+                throw new Exception("Ошибка при запуске или подключении к КОМПАС: " + ex.Message);
             }
 
             _kompas.Visible = true;
         }
 
         /// <summary>
+        /// Закрывает активный 3D-документ.
+        /// </summary>
+        /// <param name="save">Если <c>true</c>, документ сохраняется 
+        /// перед закрытием; иначе — закрывается без сохранения.</param>
+        public virtual void CloseActiveDocument3D(bool save = false)
+        {
+            if (_doc3D == null || _kompas == null)
+                return;
+
+            try
+            {
+                InvokeClose(_doc3D, save);
+            }
+            finally
+            {
+                if (_part != null)
+                {
+                    System.Runtime.InteropServices.Marshal.ReleaseComObject(_part);
+                    _part = null;
+                }
+
+                System.Runtime.InteropServices.Marshal.ReleaseComObject(_doc3D);
+                _doc3D = null;
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+            }
+        }
+
+        /// <summary>
+        /// Вызывает закрытие документа через reflection/dynamic
+        /// </summary>
+        private static void InvokeClose(object doc, bool save)
+        {
+            Type type = doc.GetType();
+
+            MethodInfo closeBool =
+                type.GetMethod("Close", new[] { typeof(bool) });
+
+            if (closeBool != null)
+            {
+                closeBool.Invoke(doc, new object[] { save });
+                return;
+            }
+
+            MethodInfo closeInt =
+                type.GetMethod("Close", new[] { typeof(int) });
+
+            if (closeInt != null)
+            {
+                closeInt.Invoke(doc, new object[] { save ? 1 : 0 });
+                return;
+            }
+
+            MethodInfo closeShort =
+                type.GetMethod("Close", new[] { typeof(short) });
+
+            if (closeShort != null)
+            {
+                closeShort.Invoke(doc, new object[] { (short)(save ? 1 : 0) });
+                return;
+            }
+
+            MethodInfo closeNoArgs =
+                type.GetMethod("Close", Type.EmptyTypes);
+
+            if (closeNoArgs != null)
+            {
+                closeNoArgs.Invoke(doc, null);
+                return;
+            }
+
+            dynamic d = doc;
+
+            try
+            {
+                d.Close(save);
+            }
+            catch
+            {
+                try
+                {
+                    d.Close();
+                }
+                catch
+                {
+                    // игнор — значит Close недоступен
+                }
+            }
+        }
+        /// <summary>
         /// Создает новый 3D-документ в КОМПАС-3D.
         /// </summary>
         /// <returns>Созданный 3D-документ.</returns>
-        public ksDocument3D CreateDocument3D()
+        public void CreateDocument3D()
         {
-            ksDocument3D doc = (ksDocument3D)_kompas!.Document3D();
-            doc.Create(false, true);
-            return doc;
+            if (_kompas == null)
+                throw new InvalidOperationException("Компас не подключён.");
+
+            _doc3D = (ksDocument3D)_kompas.Document3D();
+            _doc3D.Create(false, true);
+
+            _part = (ksPart)_doc3D.GetPart(
+                (short)Part_Type.pTop_Part);
+        }
+
+        /// <summary>
+        /// Возвращает текущую активную деталь 3D-документа.
+        /// </summary>
+        /// <returns>Объект <see cref="ksPart"/> 
+        /// представляющий деталь.</returns>
+        /// <exception cref="InvalidOperationException">Выбрасывается, 
+        /// если деталь не была создана.</exception>
+        public ksPart GetPart()
+        {
+            if (_part == null)
+                throw new InvalidOperationException("Деталь не создана.");
+
+            return _part;
         }
 
         /// <summary>
@@ -135,6 +257,7 @@ namespace Wrapper
             plane.Create();
             return plane;
         }
+
 
         /// <summary>
         /// Создает цилиндр на указанной плоскости (для буртика фланца).

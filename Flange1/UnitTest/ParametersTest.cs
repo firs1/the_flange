@@ -322,5 +322,22 @@ namespace UnitTest
             Assert.That(errors.ContainsKey(ParameterType.OuterDiameter), Is.True);
         }
 
+        [Test, Description("Проверка возврата всех параметров через метод GetAll")]
+        public void GetAll_WhenParametersSet_ReturnsAllParameters()
+        {
+            var parameters = new Parameters();
+
+            parameters.OuterDiameter_a = 200;
+            parameters.Height_d = 100;
+
+            IReadOnlyDictionary<ParameterType, Parameter> result = parameters.GetAll();
+
+            Assert.NotNull(result);
+            Assert.AreEqual(7, result.Count);
+            Assert.IsTrue(result.ContainsKey(ParameterType.OuterDiameter));
+            Assert.IsTrue(result.ContainsKey(ParameterType.Height));
+            Assert.AreEqual(200, result[ParameterType.OuterDiameter].Value);
+            Assert.AreEqual(100, result[ParameterType.Height].Value);
+        }
     }
 }

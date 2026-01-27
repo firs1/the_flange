@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Windows.Markup;
 using Models;
 using Wrapper;
 
@@ -235,6 +236,73 @@ namespace Flange1
             else
             {
                 HolesAmount.Text = string.Empty;
+            }
+        }
+
+        /// <summary>
+        /// Таймер для отложенного отображения сообщений после изменения значения шага.
+        /// Используется для реализации "debounce", чтобы сообщения не появлялись сразу при вводе.
+        /// </summary>
+        private System.Windows.Forms.Timer _stepMessageTimer;
+
+        /// <summary>
+        /// Хранит текущее значение текстового поля шага, введённое пользователем.
+        /// </summary
+        private string _pendingStepText;
+
+        /// <summary>
+        /// Обработчик события изменения текста в текстовом поле шага.
+        /// Запускает таймер на небольшую задержку перед отображением информационного сообщения.
+        /// </summary>
+        /// <param name="sender">Объект, вызвавший событие (должен быть TextBox).</param>
+        /// <param name="e">Аргументы события.</param>
+        private void Step_TextChanged(object sender, EventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                _pendingStepText = textBox.Text;
+
+                if (_stepMessageTimer == null)
+                {
+                    _stepMessageTimer = new System.Windows.Forms.Timer();
+                    _stepMessageTimer.Interval = 1500; 
+                    _stepMessageTimer.Tick += StepMessageTimer_Tick;
+                }
+
+                _stepMessageTimer.Stop();
+                _stepMessageTimer.Start();
+            }
+        }
+
+        /// <summary>
+        /// Обработчик события срабатывания таймера.
+        /// Вызывается после того, как пользователь прекратил ввод текста на заданное время.
+        /// Проверяет значение и отображает соответствующее информационное сообщение.
+        /// </summary>
+        /// <param name="sender">Объект таймера.</param>
+        /// <param name="e">Аргументы события.</param>
+        private void StepMessageTimer_Tick(object sender, EventArgs e)
+        {
+            _stepMessageTimer.Stop();
+
+            if (int.TryParse(_pendingStepText, out int value))
+            {
+                if (value == 0)
+                {
+                    MessageBox.Show(
+                        "При значении 0 шаг будет высчитан автоматически",
+                        "Информация",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
+                else if (value >= 1 && value <= 10)
+                {
+                    MessageBox.Show(
+                        "При значении 1-10 отверстия будут стоять вплотную к друг другу, а не накладываться",
+                        "Информация",
+                        MessageBoxButtons.OK,
+                        MessageBoxIcon.Information);
+                }
             }
         }
     }

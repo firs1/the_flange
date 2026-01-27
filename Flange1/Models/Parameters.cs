@@ -55,6 +55,14 @@ namespace Models
         }
 
         /// </summary>
+        /// Метод для использования в стресс тестах
+        /// </summary>
+        public IReadOnlyDictionary<ParameterType, Parameter> GetAll()
+        {
+            return _parameters;
+        }
+
+        /// </summary>
         /// Метод для проверки шагов отверстий в 
         /// зависимости от количества отверстий
         /// </summary>

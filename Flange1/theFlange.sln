@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.14.36616.10
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "theFlange", "Flange1\theFlange.csproj", "{2DE5A109-026B-4475-9223-4D5F6B15444B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheFlange", "Flange1\TheFlange.csproj", "{2DE5A109-026B-4475-9223-4D5F6B15444B}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "Models\Models.csproj", "{D3CAD1CE-B9EA-4CE3-805F-5A897276159D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wrapper", "Wrapper\Wrapper.csproj", "{0CA15048-0E2E-4A5A-9C78-E598131B3926}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitTest", "UnitTest\UnitTest.csproj", "{707E4D6B-6C1C-48A5-97A4-BC066FA77A97}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StressTesting", "StressTesting\StressTesting.csproj", "{DF77CAA0-50A5-4797-88E1-DAE0911950C7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{707E4D6B-6C1C-48A5-97A4-BC066FA77A97}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{707E4D6B-6C1C-48A5-97A4-BC066FA77A97}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{707E4D6B-6C1C-48A5-97A4-BC066FA77A97}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF77CAA0-50A5-4797-88E1-DAE0911950C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF77CAA0-50A5-4797-88E1-DAE0911950C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF77CAA0-50A5-4797-88E1-DAE0911950C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF77CAA0-50A5-4797-88E1-DAE0911950C7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
