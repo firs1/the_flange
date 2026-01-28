@@ -30,7 +30,7 @@ namespace Wrapper
         /// <summary>
         /// Строит 3D-модель фланца по заданным параметрам.
         /// </summary>
-        /// <param name="p">Параметры фланца для построения модели.</param>
+        /// <param name="p">Параметры флxанца для построения модели.</param>
         public void BuildModel( Parameters p, bool closeDocumentAfterBuild = false)
         {
             //TODO: {}
