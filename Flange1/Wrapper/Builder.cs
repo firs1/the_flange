@@ -26,12 +26,14 @@ namespace Wrapper
             _wrapper = wrapper;
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Строит 3D-модель фланца по заданным параметрам.
         /// </summary>
         /// <param name="p">Параметры фланца для построения модели.</param>
         public void BuildModel( Parameters p, bool closeDocumentAfterBuild = false)
         {
+            //TODO: {}
             if (p == null)
                 throw new ArgumentNullException(nameof(p));
 

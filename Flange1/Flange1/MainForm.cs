@@ -130,6 +130,7 @@ namespace Flange1
             }
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Обработчик изменения внешнего диаметра.
         /// Автоматически рассчитывает диаметр выступа
@@ -139,6 +140,7 @@ namespace Flange1
         {
             if (double.TryParse(OuterDiameter.Text, out double a) && a > 0)
             {
+                //TODO: to const
                 double c = a * 0.75;
                 ProtrusionDiameter.Text = c.ToString("0.##");
             }
@@ -148,6 +150,7 @@ namespace Flange1
             }
         }
 
+        //TODO: RSDN
         /// <summary>
         /// Обработчик нажатия кнопки построения модели.
         /// </summary>
@@ -202,6 +205,8 @@ namespace Flange1
             var builder = new Builder(new Wrapper.Wrapper());
             builder.BuildModel(_parameters);
         }
+
+        //TODO: remove
 
         #region Пустые обработчики
 

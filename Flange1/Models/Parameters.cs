@@ -68,12 +68,15 @@ namespace Models
         /// </summary>
         public void ValidateStep()
         {
+            //TODO: {}
+            //TODO: to const
             if (NumberOfHoles_n == 8 && HoleStep != 0)
                 throw new InvalidOperationException(
                     "Для 8 отверстий шаг не может быть задан.");
 
             double maxStep = 360.0 / NumberOfHoles_n;
 
+            //TODO: {}
             if (HoleStep > maxStep)
                 throw new ArgumentOutOfRangeException(
                     nameof(HoleStep),

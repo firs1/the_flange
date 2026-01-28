@@ -21,7 +21,11 @@ namespace Wrapper
         /// или подключение не было выполнено.
         /// </summary>
         private KompasObject? _kompas;
+
+        //TODO: XML
         private ksDocument3D? _doc3D;
+
+        //TODO: XML
         private ksPart? _part;
 
         /// <summary>
@@ -47,17 +51,20 @@ namespace Wrapper
             try
             {
                 Type kompasType = Type.GetTypeFromProgID("KOMPAS.Application.5");
+                //TODO: {}
                 if (kompasType == null)
                     throw new Exception("Не удалось получить ProgID КОМПАС.");
 
                 // Создаём новый экземпляр только если _kompas еще null
                 _kompas = Activator.CreateInstance(kompasType) as KompasObject;
+                //TODO: {}
                 if (_kompas == null)
                     throw new Exception("Не удалось запустить КОМПАС.");
             }
             catch (Exception ex)
             {
-                throw new Exception("Ошибка при запуске или подключении к КОМПАС: " + ex.Message);
+                throw new Exception("Ошибка при запуске или подключении к КОМПАС: " 
+                    + ex.Message);
             }
 
             _kompas.Visible = true;
@@ -136,6 +143,7 @@ namespace Wrapper
                 return;
             }
 
+            //TODO: rename
             dynamic d = doc;
 
             try
@@ -150,6 +158,7 @@ namespace Wrapper
                 }
                 catch
                 {
+                    //TODO: ??
                     // игнор — значит Close недоступен
                 }
             }
@@ -161,6 +170,7 @@ namespace Wrapper
         public void CreateDocument3D()
         {
             if (_kompas == null)
+                //TODO: {}
                 throw new InvalidOperationException("Компас не подключён.");
 
             _doc3D = (ksDocument3D)_kompas.Document3D();
@@ -179,6 +189,7 @@ namespace Wrapper
         /// если деталь не была создана.</exception>
         public ksPart GetPart()
         {
+            //TODO: {}
             if (_part == null)
                 throw new InvalidOperationException("Деталь не создана.");
 
