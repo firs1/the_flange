@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Numerics;
 
 namespace Models
 {
@@ -66,21 +67,27 @@ namespace Models
         /// Метод для проверки шагов отверстий в 
         /// зависимости от количества отверстий
         /// </summary>
+
+        public const int number = 8;
         public void ValidateStep()
         {
-            //TODO: {}
-            //TODO: to const
-            if (NumberOfHoles_n == 8 && HoleStep != 0)
+
+            if (NumberOfHoles_n == number && HoleStep != 0)
+            {
                 throw new InvalidOperationException(
-                    "Для 8 отверстий шаг не может быть задан.");
+                $"Для {number} отверстий шаг не может быть задан.");
+            }
+
 
             double maxStep = 360.0 / NumberOfHoles_n;
 
-            //TODO: {}
+
             if (HoleStep > maxStep)
+            {
                 throw new ArgumentOutOfRangeException(
                     nameof(HoleStep),
                     $"Шаг не может быть больше {maxStep} для заданного количества отверстий.");
+            }
         }
 
         #region Base access

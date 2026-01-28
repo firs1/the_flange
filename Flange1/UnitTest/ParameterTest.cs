@@ -3,7 +3,7 @@ using System;
 using Models;
 namespace UnitTest
 {
-    //TODO: encoding
+
     /// <summary>
     /// Набор юнит-тестов для класса Parameter.
     /// Проверяет корректность хранения значений

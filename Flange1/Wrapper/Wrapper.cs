@@ -22,10 +22,18 @@ namespace Wrapper
         /// </summary>
         private KompasObject? _kompas;
 
-        //TODO: XML
+        /// <summary>
+        /// 3D-документ КОМПАС-3D.
+        /// Может быть <c>null</c>, если документ не создан
+        /// или был закрыт.
+        /// </summary>
         private ksDocument3D? _doc3D;
 
-        //TODO: XML
+        /// <summary>
+        /// Текущая 3D-деталь (Part), связанная с документом.
+        /// Может быть <c>null</c>, если документ не инициализирован
+        /// или деталь ещё не получена.
+        /// </summary>
         private ksPart? _part;
 
         /// <summary>
@@ -51,15 +59,22 @@ namespace Wrapper
             try
             {
                 Type kompasType = Type.GetTypeFromProgID("KOMPAS.Application.5");
-                //TODO: {}
+
                 if (kompasType == null)
+
+                {
                     throw new Exception("Не удалось получить ProgID КОМПАС.");
+                }    
 
                 // Создаём новый экземпляр только если _kompas еще null
                 _kompas = Activator.CreateInstance(kompasType) as KompasObject;
-                //TODO: {}
+
                 if (_kompas == null)
+
+                {
                     throw new Exception("Не удалось запустить КОМПАС.");
+                }    
+
             }
             catch (Exception ex)
             {
@@ -143,23 +158,23 @@ namespace Wrapper
                 return;
             }
 
-            //TODO: rename
-            dynamic d = doc;
+            dynamic document = doc;
 
             try
             {
-                d.Close(save);
+                document.Close(save);
             }
             catch
             {
                 try
                 {
-                    d.Close();
+                    document.Close();
                 }
                 catch
                 {
-                    //TODO: ??
-                    // игнор — значит Close недоступен
+                    throw new NotSupportedException(
+                    $"Объект типа {doc.GetType().FullName} не поддерживает " +
+                    $"метод Close ни в одном из известных вариантов.");
                 }
             }
         }
@@ -170,8 +185,10 @@ namespace Wrapper
         public void CreateDocument3D()
         {
             if (_kompas == null)
-                //TODO: {}
+
+            {
                 throw new InvalidOperationException("Компас не подключён.");
+            }
 
             _doc3D = (ksDocument3D)_kompas.Document3D();
             _doc3D.Create(false, true);
@@ -189,9 +206,12 @@ namespace Wrapper
         /// если деталь не была создана.</exception>
         public ksPart GetPart()
         {
-            //TODO: {}
+
             if (_part == null)
+
+            {
                 throw new InvalidOperationException("Деталь не создана.");
+            }
 
             return _part;
         }

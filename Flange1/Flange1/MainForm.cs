@@ -130,18 +130,17 @@ namespace Flange1
             }
         }
 
-        //TODO: RSDN
         /// <summary>
         /// Обработчик изменения внешнего диаметра.
         /// Автоматически рассчитывает диаметр выступа
         /// как 75% от внешнего диаметра.
         /// </summary>
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        public const double AcceptableSize = 0.75; 
+        private void OuterDiameter_TextChanged(object sender, EventArgs e)
         {
             if (double.TryParse(OuterDiameter.Text, out double a) && a > 0)
             {
-                //TODO: to const
-                double c = a * 0.75;
+                double c = a * AcceptableSize;
                 ProtrusionDiameter.Text = c.ToString("0.##");
             }
             else
@@ -150,11 +149,10 @@ namespace Flange1
             }
         }
 
-        //TODO: RSDN
         /// <summary>
         /// Обработчик нажатия кнопки построения модели.
         /// </summary>
-        private void button1_Click(object sender, EventArgs e)
+        private void Build_Click(object sender, EventArgs e)
         {
             ClearValidation();
 
@@ -205,13 +203,6 @@ namespace Flange1
             var builder = new Builder(new Wrapper.Wrapper());
             builder.BuildModel(_parameters);
         }
-
-        //TODO: remove
-
-        #region Пустые обработчики
-
-
-        #endregion
 
         /// <summary>
         /// Флаг защиты от рекурсивного изменения текста

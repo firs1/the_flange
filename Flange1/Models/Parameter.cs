@@ -30,10 +30,11 @@
         /// <param name="value">Начальное значение</param>
         public Parameter(double min, double max, double? value = null)
         {
-            //TODO: {}
-            if (min > max)
-                throw new ArgumentException("Минимальное значение не может быть больше максимального.");
 
+            if (min > max)
+            {
+                throw new ArgumentException("Минимальное значение не может быть больше максимального.");
+            }
             _min = min;
             _max = max;
 

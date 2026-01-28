@@ -26,16 +26,19 @@ namespace Wrapper
             _wrapper = wrapper;
         }
 
-        //TODO: RSDN
         /// <summary>
         /// Строит 3D-модель фланца по заданным параметрам.
         /// </summary>
-        /// <param name="p">Параметры флxанца для построения модели.</param>
-        public void BuildModel( Parameters p, bool closeDocumentAfterBuild = false)
+        /// <param name="parameters">Параметры фланца для построения модели.</param>
+        public void BuildModel( Parameters parameters, bool closeDocumentAfterBuild = false)
         {
-            //TODO: {}
-            if (p == null)
-                throw new ArgumentNullException(nameof(p));
+
+            if (parameters == null)
+
+            {
+                throw new ArgumentNullException(nameof(parameters));
+            }    
+
 
             _wrapper.AttachOrRunCAD();
             _wrapper.CreateDocument3D();
@@ -44,13 +47,13 @@ namespace Wrapper
             {
                 var part = _wrapper.GetPart();
 
-                double a = p.OuterDiameter_a;
-                double b = p.ProtrusionDiameter_b;
-                double c = p.Thickness_c;
-                double d = p.Height_d;
-                double holeDiameter = p.DiameterHoles_e;
-                int holeCount = p.NumberOfHoles_n;
-                int holeStep = p.HoleStep_h;
+                double a = parameters.OuterDiameter_a;
+                double b = parameters.ProtrusionDiameter_b;
+                double c = parameters.Thickness_c;
+                double d = parameters.Height_d;
+                double holeDiameter = parameters.DiameterHoles_e;
+                int holeCount = parameters.NumberOfHoles_n;
+                int holeStep = parameters.HoleStep_h;
                 double infelicity = 1.1;
 
                 _wrapper.CreateBaseCylinder(part, a, c);
@@ -62,7 +65,7 @@ namespace Wrapper
 
                 double aproxAngleDiameter =
                     infelicity * 360 /
-                    (p.OuterDiameter_a * Math.PI / p.DiameterHoles_e);
+                    (parameters.OuterDiameter_a * Math.PI / parameters.DiameterHoles_e);
 
                 if (holeCount == 8)
                 {
@@ -70,18 +73,18 @@ namespace Wrapper
                 }
 
                 if (holeCount != 8 &&
-                    p.HoleStep_h != 0 &&
-                    p.HoleStep_h < aproxAngleDiameter)
+                    parameters.HoleStep_h != 0 &&
+                    parameters.HoleStep_h < aproxAngleDiameter)
                 {
                     holeStep =
-                        p.HoleStep_h +
-                        (int)p.DiameterHoles_e / 2 + 2;
+                        parameters.HoleStep_h +
+                        (int)parameters.DiameterHoles_e / 2 + 2;
                 }
 
-                if (p.HoleStep_h == 0 ||
-                    p.HoleStep_h > aproxAngleDiameter)
+                if (parameters.HoleStep_h == 0 ||
+                    parameters.HoleStep_h > aproxAngleDiameter)
                 {
-                    holeStep = p.HoleStep_h;
+                    holeStep = parameters.HoleStep_h;
                 }
 
                 var basePlane =

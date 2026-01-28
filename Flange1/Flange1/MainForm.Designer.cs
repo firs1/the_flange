@@ -84,7 +84,7 @@ namespace Flange1
             OuterDiameter.Size = new Size(84, 23);
             OuterDiameter.TabIndex = 1;
             OuterDiameter.Text = "200";
-            OuterDiameter.TextChanged += textBox1_TextChanged;
+            OuterDiameter.TextChanged += OuterDiameter_TextChanged;
             // 
             // label2
             // 
@@ -223,7 +223,7 @@ namespace Flange1
             Build.TabIndex = 17;
             Build.Text = "Собрать";
             Build.UseVisualStyleBackColor = true;
-            Build.Click += button1_Click;
+            Build.Click += Build_Click;
             // 
             // label12
             // 
