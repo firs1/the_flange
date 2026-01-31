@@ -72,6 +72,7 @@ namespace Models
         public void ValidateStep()
         {
 
+
             if (NumberOfHoles_n == number && HoleStep != 0)
             {
                 throw new InvalidOperationException(
@@ -220,7 +221,7 @@ namespace Models
             if (ProtrusionDiameter_b > AcceptableSize * OuterDiameter_a)
             {
                 errors[ParameterType.ProtrusionDiameter] =
-                    "Диаметр выступа B должен быть ≤ 0.75 * A";
+                    $"Диаметр выступа B должен быть ≤ {AcceptableSize} * A";
             }
 
             if (Thickness_c >= OuterDiameter_a)
