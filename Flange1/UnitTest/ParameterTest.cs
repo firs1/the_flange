@@ -1,30 +1,30 @@
-using NUnit.Framework;
+п»їusing NUnit.Framework;
 using System;
 using Models;
 namespace UnitTest
 {
 
     /// <summary>
-    /// Набор юнит-тестов для класса Parameter.
-    /// Проверяет корректность хранения значений
-    /// и соблюдение допустимых диапазонов.
+    /// РќР°Р±РѕСЂ СЋРЅРёС‚-С‚РµСЃС‚РѕРІ РґР»СЏ РєР»Р°СЃСЃР° Parameter.
+    /// РџСЂРѕРІРµСЂСЏРµС‚ РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚СЊ С…СЂР°РЅРµРЅРёСЏ Р·РЅР°С‡РµРЅРёР№
+    /// Рё СЃРѕР±Р»СЋРґРµРЅРёРµ РґРѕРїСѓСЃС‚РёРјС‹С… РґРёР°РїР°Р·РѕРЅРѕРІ.
     /// <summary>
     [TestFixture]
     public class ParameterTests
     {
-        [TestCase, Description("Проверка установки значения, находящегося " +
-            "внутри допустимого диапазона.")]
+        [TestCase, Description("РџСЂРѕРІРµСЂРєР° СѓСЃС‚Р°РЅРѕРІРєРё Р·РЅР°С‡РµРЅРёСЏ, РЅР°С…РѕРґСЏС‰РµРіРѕСЃСЏ " +
+            "РІРЅСѓС‚СЂРё РґРѕРїСѓСЃС‚РёРјРѕРіРѕ РґРёР°РїР°Р·РѕРЅР°.")]
         public void Value_SetInsideRange_ValueIsStored()
         {
             var ValueSet = new Parameter(1, 10);
 
-           ValueSet.Value = 5;
+            ValueSet.Value = 5;
             Assert.AreEqual(5, ValueSet.Value);
         }
 
 
-        [TestCase, Description("Проверка корректности сохранения минимального" +
-            " и максимального значений,переданных через конструктор. ")]
+        [TestCase, Description("РџСЂРѕРІРµСЂРєР° РєРѕСЂСЂРµРєС‚РЅРѕСЃС‚Рё СЃРѕС…СЂР°РЅРµРЅРёСЏ РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ" +
+            " Рё РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ Р·РЅР°С‡РµРЅРёР№,РїРµСЂРµРґР°РЅРЅС‹С… С‡РµСЂРµР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂ. ")]
         public void Constructor_MinAndMax_AreStoredCorrectly()
         {
 
@@ -34,18 +34,18 @@ namespace UnitTest
             Assert.AreEqual(20, MinMax.Max);
         }
 
-        [TestCase, Description("Проверка установки минимального " +
-            "значения больше чем максимального")]
+        [TestCase, Description("РџСЂРѕРІРµСЂРєР° СѓСЃС‚Р°РЅРѕРІРєРё РјРёРЅРёРјР°Р»СЊРЅРѕРіРѕ " +
+            "Р·РЅР°С‡РµРЅРёСЏ Р±РѕР»СЊС€Рµ С‡РµРј РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ")]
         public void Constructor_MinGreaterThanMax_ShouldThrowArgumentException()
         {
             var ex = Assert.Throws<ArgumentException>(
                 () => new Parameter(10, 5));
 
             Assert.That(
-                ex.Message.Contains("Минимальное значение не может " +
-                "быть больше максимального."),
+                ex.Message.Contains("РњРёРЅРёРјР°Р»СЊРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ РЅРµ РјРѕР¶РµС‚ " +
+                "Р±С‹С‚СЊ Р±РѕР»СЊС€Рµ РјР°РєСЃРёРјР°Р»СЊРЅРѕРіРѕ."),
                 Is.True,
-                "Сообщение об ошибке не совпадает.");
+                "РЎРѕРѕР±С‰РµРЅРёРµ РѕР± РѕС€РёР±РєРµ РЅРµ СЃРѕРІРїР°РґР°РµС‚.");
         }
 
     }
